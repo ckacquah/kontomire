@@ -1,5 +1,5 @@
-#ifndef __LAME_GAME_APPLICATION__
-#define __LAME_GAME_APPLICATION__
+#ifndef __OPENGL_CPP_TEMPLATE_APPLICATION__
+#define __OPENGL_CPP_TEMPLATE_APPLICATION__
 
 #include <memory>
 #include <vector>
@@ -47,4 +47,4 @@ void Application::run()
     }
 }
 
-#endif // __LAME_GAME_APPLICATION__
+#endif // __OPENGL_CPP_TEMPLATE_APPLICATION__

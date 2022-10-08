@@ -1,5 +1,5 @@
-#ifndef __APP_TEST_LAYER__
-#define __APP_TEST_LAYER__
+#ifndef __OPENGL_CPP_TEMPLATE_TEST_LAYER__
+#define __OPENGL_CPP_TEMPLATE_TEST_LAYER__
 
 #include <vector>
 
@@ -62,4 +62,4 @@ public:
     }
 };
 
-#endif // __APP_TEST_LAYER__
+#endif // __OPENGL_CPP_TEMPLATE_TEST_LAYER__

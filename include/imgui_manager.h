@@ -1,5 +1,5 @@
-#ifndef __LAME_GAME_IMGUI_LAYER__
-#define __LAME_GAME_IMGUI_LAYER__
+#ifndef __OPENGL_CPP_TEMPLATE_IMGUI_LAYER__
+#define __OPENGL_CPP_TEMPLATE_IMGUI_LAYER__
 
 #include <array>
 #include <functional>
@@ -32,4 +32,4 @@ public:
     ~ImguiWindowManager();
 };
 
-#endif // __LAME_GAME_IMGUI_LAYER__
+#endif // __OPENGL_CPP_TEMPLATE_IMGUI_LAYER__

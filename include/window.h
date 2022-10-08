@@ -1,5 +1,5 @@
-#ifndef __LAME_GAME_WINDOWS__
-#define __LAME_GAME_WINDOWS__
+#ifndef __OPENGL_CPP_TEMPLATE_WINDOWS__
+#define __OPENGL_CPP_TEMPLATE_WINDOWS__
 
 #include <memory>
 #include <string>
@@ -38,4 +38,4 @@ public:
     const WindowSize& get_size() noexcept;
 };
 
-#endif // __LAME_GAME_WINDOWS__
+#endif // __OPENGL_CPP_TEMPLATE_WINDOWS__

@@ -1,5 +1,5 @@
-#ifndef __LAME_GAME_LAYER__
-#define __LAME_GAME_LAYER__
+#ifndef __OPENGL_CPP_TEMPLATE_LAYER__
+#define __OPENGL_CPP_TEMPLATE_LAYER__
 
 class Layer {
 public:
@@ -8,4 +8,4 @@ public:
     virtual void update() const noexcept {};
 };
 
-#endif // __LAME_GAME_LAYER__
+#endif // __OPENGL_CPP_TEMPLATE_LAYER__

@@ -8,7 +8,7 @@
 
 #include <GLFW/glfw3.h>
 
-#include "imgui_manager.h"
+#include "kontomire/core/imgui_manager.h"
 
 struct WindowSize {
     int width {};

@@ -4,11 +4,10 @@
 #include <memory>
 #include <vector>
 
-#include "window.h"
-
-#include "imgui_manager.h"
-#include "layer.h"
-#include "layers/test.h"
+#include "kontomire/core/layer.h"
+#include "kontomire/core/layers/opengl.h"
+#include "kontomire/core/layers/test.h"
+#include "kontomire/core/window.h"
 
 class Application {
 private:
@@ -25,10 +24,7 @@ Application::Application()
     : window(std::make_unique<Window>("OpenGL CPP Template"))
 {
     layers.push_back(std::unique_ptr<Layer>(new TestLayer1()));
-    layers.push_back(std::unique_ptr<Layer>(new TestLayer2()));
-    layers.push_back(std::unique_ptr<Layer>(new TestLayer3()));
-    layers.push_back(std::unique_ptr<Layer>(new TestLayer4()));
-
+    layers.push_back(std::unique_ptr<Layer>(new OpenGL_Layer()));
     window->create();
 
     for (const auto& layer : layers)

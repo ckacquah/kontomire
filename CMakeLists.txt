@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 set(PROJECT_NAME "opengl_cpp_template_project")
+set(RENDERER_NAME "kontomire")
 
 project(${PROJECT_NAME} VERSION 1.0)
 
@@ -21,9 +22,21 @@ message(STATUS "Started CMake for ${PROJECT_NAME} v${PROJECT_VERSION}...\n")
 
 add_executable(
   ${PROJECT_NAME}
-  ${PROJECT_SOURCE_DIR}/src/main.cpp
-  ${PROJECT_SOURCE_DIR}/src/window.cpp
-  ${PROJECT_SOURCE_DIR}/src/imgui_manager.cpp)
+  ${PROJECT_SOURCE_DIR}/src/main.cc
+  ${PROJECT_SOURCE_DIR}/src/window.cc
+  ${PROJECT_SOURCE_DIR}/src/imgui_manager.cc)
+
+add_library(${RENDERER_NAME}
+  ${PROJECT_SOURCE_DIR}/src/kontomire/renderer/buffer.cc
+  ${PROJECT_SOURCE_DIR}/src/kontomire/renderer/renderAPI.cc
+  ${PROJECT_SOURCE_DIR}/src/kontomire/renderer/renderer2d.cc
+  ${PROJECT_SOURCE_DIR}/src/kontomire/renderer/framebuffer.cc
+  ${PROJECT_SOURCE_DIR}/src/kontomire/renderer/vertex_arrays.cc
+  ${PROJECT_SOURCE_DIR}/src/platform/opengl/buffer.cc
+  ${PROJECT_SOURCE_DIR}/src/platform/opengl/renderAPI.cc
+  ${PROJECT_SOURCE_DIR}/src/platform/opengl/framebuffer.cc
+  ${PROJECT_SOURCE_DIR}/src/platform/opengl/vertex_arrays.cc
+)
 
 set(GLFW_INSTALL
   OFF
@@ -47,15 +60,24 @@ set(GLFW_DOCUMENT_INTERNALS
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/deps)
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
+target_include_directories(${RENDERER_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/deps)
+target_include_directories(${RENDERER_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
+
+add_subdirectory(${PROJECT_SOURCE_DIR}/deps/glm)
 add_subdirectory(${PROJECT_SOURCE_DIR}/deps/glad)
 add_subdirectory(${PROJECT_SOURCE_DIR}/deps/glfw)
 add_subdirectory(${PROJECT_SOURCE_DIR}/deps/imgui)
 add_subdirectory(${PROJECT_SOURCE_DIR}/deps/implot)
 
+target_link_libraries(${RENDERER_NAME} glm)
+target_link_libraries(${RENDERER_NAME} glad)
+
+target_link_libraries(${PROJECT_NAME} glm)
 target_link_libraries(${PROJECT_NAME} glad)
 target_link_libraries(${PROJECT_NAME} glfw)
 target_link_libraries(${PROJECT_NAME} imgui)
 target_link_libraries(${PROJECT_NAME} implot)
+target_link_libraries(${PROJECT_NAME} ${RENDERER_NAME})
 
 # ####################################################
 # ####################################################

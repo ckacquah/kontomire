@@ -13,7 +13,7 @@
 #include <imgui/backends/imgui_impl_glfw.h>
 #include <imgui/backends/imgui_impl_opengl3.h>
 
-#include "imgui_manager.h"
+#include "kontomire/core/imgui_manager.h"
 
 ImguiWindowManager::ImguiWindowManager(const std::string& glsl_version_str)
     : glsl_version(glsl_version_str)

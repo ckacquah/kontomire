@@ -16,8 +16,8 @@
 #include <imgui/backends/imgui_impl_glfw.h>
 #include <imgui/backends/imgui_impl_opengl3.h>
 
-#include "imgui_manager.h"
-#include "window.h"
+#include "kontomire/core/imgui_manager.h"
+#include "kontomire/core/window.h"
 
 static void glfw_error_callback(int error, const char* description)
 {

@@ -3,7 +3,7 @@
 
 class Layer {
 public:
-    virtual void init() const noexcept {};
+    virtual void init() noexcept {};
     virtual void destroy() const noexcept {};
     virtual void update() const noexcept {};
 };

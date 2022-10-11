@@ -51,6 +51,7 @@ void ImguiWindowManager::init(GLFWwindow* window) noexcept
     ImGuiStyle& style = ImGui::GetStyle();
     if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
         style.WindowRounding = 0.0f;
+        // style.WindowPadding = ImVec2(0.0f, 0.0f);
         style.Colors[ImGuiCol_WindowBg].w = 1.0f;
     }
     ImVec4 clear_color = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);

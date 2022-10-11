@@ -14,26 +14,25 @@
 #include "kontomire/renderer/renderAPI.h"
 #include "kontomire/renderer/vertex_arrays.h"
 
-const float vertices[] = {
-    -0.5f, -0.5f, 0.0f,
-    0.5f, -0.5f, 0.0f,
-    0.0f, 0.5f, 0.0f
-};
-
-const uint32_t indices[] = { 1, 2, 3 };
-
 const char* vertexShaderSource = "#version 330 core\n"
                                  "layout (location = 0) in vec3 aPos;\n"
+                                 "layout (location = 1) in vec4 aColor;\n"
+                                 "out vec3 vPos;\n"
+                                 "out vec4 vColor;\n"
                                  "void main()\n"
                                  "{\n"
+                                 "   vPos = aPos;\n"
+                                 "   vColor = aColor;\n"
                                  "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
                                  "}\0";
 
 const char* fragmentShaderSource = "#version 330 core\n"
-                                   "out vec4 FragColor;\n"
+                                   "layout(location = 0) out vec4 color;\n"
+                                   "in vec3 vPos;\n"
+                                   "in vec4 vColor;\n"
                                    "void main()\n"
                                    "{\n"
-                                   "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+                                   "   color = vec4(vColor.x, vColor.y, vColor.z, 1.0f);\n"
                                    "}\0";
 
 class OpenGL_Layer : public Layer {
@@ -58,8 +57,25 @@ public:
     {
         api = Kontomire::RenderAPI::create();
         vertex_array = Kontomire::VertexArray::create();
-        vertex_array->add_vertex_buffer(Kontomire::VertexBuffer::create(vertices, 9));
-        vertex_array->set_index_buffer(Kontomire::IndexBuffer::create(indices, 3));
+
+        float vertices[3 * 7] = {
+            -0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
+            0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
+            0.0f, 0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
+        };
+
+        auto vertex_buffer = Kontomire::VertexBuffer::create(vertices, sizeof(vertices));
+        Kontomire::BufferLayout layout = {
+            { Kontomire::ShaderDataType::Float3, "aPos" },
+            { Kontomire::ShaderDataType::Float4, "aColor" }
+        };
+        vertex_buffer->set_layout(layout);
+        vertex_array->add_vertex_buffer(vertex_buffer);
+
+        uint32_t indices[3] = { 0, 1, 2 };
+
+        auto index_buffer = Kontomire::IndexBuffer::create(indices, sizeof(indices) / sizeof(uint32_t));
+        vertex_array->set_index_buffer(index_buffer);
 
         Kontomire::FramebufferSpecification fbSpec;
         fbSpec.attachments = { Kontomire::FramebufferTextureFormat::RGBA8, Kontomire::FramebufferTextureFormat::RED_INTEGER, Kontomire::FramebufferTextureFormat::Depth };
@@ -95,20 +111,30 @@ public:
 
     void update() const noexcept override
     {
-        glUseProgram(shaderProgram);
+
         framebuffer->bind();
-        api->draw_indexed(vertex_array);
-        api->set_clear_color(glm::vec4(0.5f, 0.2f, 5.0f, 1.0f));
+
+        api->set_clear_color(glm::vec4(0.5f, 0.2f, 0.5f, 1.0f));
+
         api->clear();
+
         framebuffer->clear_attachment(1, -1);
-        framebuffer->unbind();
+
+        glUseProgram(shaderProgram);
+
+        api->draw_indexed(vertex_array, 3);
+
         uint32_t texture = framebuffer->get_color_attachment_id();
 
         ImGui::Begin("OpenGL Layer");
         {
+            ImGui::BeginChild("Viewport");
             ImGui::Image(reinterpret_cast<void*>(texture), ImGui::GetWindowSize(), ImVec2 { 0, 1 }, ImVec2 { 1, 0 });
-            ImGui::End();
+            ImGui::EndChild();
         }
+        ImGui::End();
+
+        framebuffer->unbind();
     }
 };
 

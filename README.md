@@ -5,8 +5,10 @@ I have decided to go back and experiment with c++ and opengl. This is the templa
 # Screenshots
 
 ![Template App Screenshot](assets/screenshot-01.png)
-
 ![Template App Screenshot](assets/screenshot-02.png)
+![Template App Screenshot](assets/screenshot-03.png)
+![Template App Screenshot](assets/screenshot-04.png)
+![Template App Screenshot](assets/screenshot-05.png)
 
 # How to use
 

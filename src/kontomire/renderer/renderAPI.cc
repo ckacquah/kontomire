@@ -11,9 +11,9 @@ std::shared_ptr<RenderAPI> RenderAPI::create() noexcept
     switch (_api) {
     case RenderAPI::API::None:
     case RenderAPI::API::OpenGL:
-        return std::shared_ptr<RenderAPI>(new OpenGLRenderAPI());
+        return std::make_shared<OpenGLRenderAPI>();
     }
-    return std::shared_ptr<RenderAPI>();
+    return nullptr;
 }
 
 } // namespace Kontomire

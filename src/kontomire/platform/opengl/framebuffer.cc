@@ -1,6 +1,6 @@
 #include <glad/glad.h>
 
-#include "platform/opengl/framebuffer.h"
+#include "kontomire/platform/opengl/framebuffer.h"
 
 namespace Kontomire {
 
@@ -61,12 +61,7 @@ namespace Utils {
 
     static bool is_depth_format(FramebufferTextureFormat format)
     {
-        switch (format) {
-        case FramebufferTextureFormat::DEPTH24STENCIL8:
-            return true;
-        }
-
-        return false;
+        return format == FramebufferTextureFormat::DEPTH24STENCIL8;
     }
 
     static GLenum texture_format_to_GL(FramebufferTextureFormat format)

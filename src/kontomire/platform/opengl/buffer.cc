@@ -1,6 +1,6 @@
 #include <glad/glad.h>
 
-#include "platform/opengl/buffer.h"
+#include "kontomire/platform/opengl/buffer.h"
 
 namespace Kontomire {
 

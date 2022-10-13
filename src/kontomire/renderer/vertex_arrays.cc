@@ -1,7 +1,8 @@
 #include <memory>
 
+#include "kontomire/platform/opengl/vertex_arrays.h"
 #include "kontomire/renderer/renderAPI.h"
-#include "platform/opengl/vertex_arrays.h"
+
 
 namespace Kontomire {
 

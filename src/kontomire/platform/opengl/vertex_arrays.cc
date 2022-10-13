@@ -1,7 +1,7 @@
 #include <cassert>
 #include <glad/glad.h>
 
-#include "platform/opengl/vertex_arrays.h"
+#include "kontomire/platform/opengl/vertex_arrays.h"
 
 namespace Kontomire {
 

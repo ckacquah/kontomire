@@ -1,6 +1,6 @@
 #include <glad/glad.h>
 
-#include "platform/opengl/renderAPI.h"
+#include "kontomire/platform/opengl/renderAPI.h"
 
 namespace Kontomire {
 

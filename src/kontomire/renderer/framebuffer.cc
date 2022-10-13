@@ -1,8 +1,9 @@
 #include <memory>
 
+#include "kontomire/platform/opengl/framebuffer.h"
 #include "kontomire/renderer/framebuffer.h"
 #include "kontomire/renderer/renderAPI.h"
-#include "platform/opengl/framebuffer.h"
+
 
 namespace Kontomire {
 

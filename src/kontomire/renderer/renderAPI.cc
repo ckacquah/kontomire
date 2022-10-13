@@ -1,5 +1,5 @@
 #include "kontomire/renderer/renderAPI.h"
-#include "platform/opengl/renderAPI.h"
+#include "kontomire/platform/opengl/renderAPI.h"
 
 #include <functional>
 #include <memory>

@@ -71,8 +71,9 @@ namespace Utils {
             return GL_RGBA8;
         case FramebufferTextureFormat::RED_INTEGER:
             return GL_RED_INTEGER;
+        default:
+            return 0;
         }
-        return 0;
     }
 
 }
@@ -127,6 +128,8 @@ void OpenGLFramebuffer::invalidate()
             case FramebufferTextureFormat::RED_INTEGER:
                 Utils::attach_color_texture(_color_attachment[i], _specification.samples, GL_R32I, GL_RED_INTEGER, _specification.width, _specification.height, i);
                 break;
+            default:
+                break;
             }
         }
     }
@@ -134,10 +137,8 @@ void OpenGLFramebuffer::invalidate()
     if (_depth_attachment_specification.texture_format != FramebufferTextureFormat::None) {
         Utils::create_texture(multisample, &_depth_attachment, 1);
         Utils::bind_texture(multisample, _depth_attachment);
-        switch (_depth_attachment_specification.texture_format) {
-        case FramebufferTextureFormat::DEPTH24STENCIL8:
+        if (_depth_attachment_specification.texture_format == FramebufferTextureFormat::DEPTH24STENCIL8) {
             Utils::attach_depth_texture(_depth_attachment, _specification.samples, GL_DEPTH24_STENCIL8, GL_DEPTH_STENCIL_ATTACHMENT, _specification.width, _specification.height);
-            break;
         }
     }
 

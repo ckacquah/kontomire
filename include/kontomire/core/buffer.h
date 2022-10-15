@@ -8,7 +8,6 @@
 namespace Kontomire {
 
 enum class ShaderDataType {
-    None = 0,
     Float,
     Float2,
     Float3,
@@ -48,7 +47,6 @@ static uint32_t ShaderDataTypeSize(ShaderDataType type)
     case ShaderDataType::Bool:
         return 1;
     }
-
     return 0;
 }
 

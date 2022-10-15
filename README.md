@@ -13,8 +13,8 @@ I'm just playing with opengl. This little experiment is supposed to help me impr
 # How to use
 
 ```console
-$ git clone --recurse-submodules git@github.com:ckacquah/Kontomire-Rendering-Engine.git
-$ cd Kontomire-Rendering-Engine
+$ git clone --recurse-submodules git@github.com:ckacquah/kontomire.git
+$ cd kontomire
 $ mkdir build
 $ cd build
 $ cmake ../

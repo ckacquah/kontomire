@@ -1,5 +1,5 @@
-#ifndef __OPENGL_CPP_TEMPLATE_OPENGL_BUFFER__
-#define __OPENGL_CPP_TEMPLATE_OPENGL_BUFFER__
+#ifndef __KONTOMIRE_OPENGL_BUFFER__
+#define __KONTOMIRE_OPENGL_BUFFER__
 
 #include <stdint.h>
 
@@ -8,12 +8,12 @@
 namespace Kontomire {
 
 class OpenGLVertexBuffer : public VertexBuffer {
-private:
-    uint32_t _id {};
-    BufferLayout _layout {};
+  private:
+    uint32_t _id{};
+    BufferLayout _layout{};
 
-public:
-    OpenGLVertexBuffer() {};
+  public:
+    OpenGLVertexBuffer(){};
     OpenGLVertexBuffer(const float* vertices, uint32_t size);
     virtual ~OpenGLVertexBuffer();
 
@@ -25,7 +25,7 @@ public:
 };
 
 class OpenGLIndexBuffer : public IndexBuffer {
-public:
+  public:
     OpenGLIndexBuffer(const uint32_t* indices, uint32_t count);
     virtual ~OpenGLIndexBuffer();
 
@@ -34,11 +34,11 @@ public:
 
     virtual uint32_t get_count() const override { return _count; }
 
-private:
+  private:
     uint32_t _id;
     uint32_t _count;
 };
 
 } // namespace Kontomire
 
-#endif // __OPENGL_CPP_TEMPLATE_OPENGL_BUFFER__
+#endif // __KONTOMIRE_OPENGL_BUFFER__

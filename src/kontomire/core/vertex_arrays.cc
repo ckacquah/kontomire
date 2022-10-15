@@ -3,11 +3,9 @@
 #include "kontomire/core/renderAPI.h"
 #include "kontomire/platform/opengl/vertex_arrays.h"
 
-
 namespace Kontomire {
 
-std::shared_ptr<VertexArray> VertexArray::create()
-{
+std::shared_ptr<VertexArray> VertexArray::create() {
     switch (RenderAPI::get_API()) {
     case RenderAPI::API::None:
         return nullptr;

@@ -19,14 +19,11 @@
 #include "imgui_manager.h"
 #include "window.h"
 
-static void glfw_error_callback(int error, const char* description)
-{
+static void glfw_error_callback(int error, const char* description) {
     std::cerr << "GLFW Error " << error << " " << description << std::endl;
 }
 
-Window::Window(const std::string& name, int width, int height)
-    : name(name)
-{
+Window::Window(const std::string& name, int width, int height) : name(name) {
     size.width = width;
     size.height = height;
 
@@ -47,35 +44,31 @@ Window::Window(const std::string& name, int width, int height)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // 3.2+ only
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // Required on Mac
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);           // Required on Mac
 #else
     // GL 3.0 + GLSL 130
     glsl_version = "#version 420";
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // 3.2+ only
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // 3.0+ only
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);           // 3.0+ only
 #endif
 
     imgui_window_manager = std::make_unique<ImguiWindowManager>(glsl_version);
 }
 
-Window::~Window()
-{
+Window::~Window() {
     if (window) {
         glfwDestroyWindow(window);
     }
     glfwTerminate();
 }
 
-bool Window::is_closed() const
-{
-    return glfwWindowShouldClose(window);
-}
+bool Window::is_closed() const { return glfwWindowShouldClose(window); }
 
-void Window::create()
-{
-    window = glfwCreateWindow(size.width, size.height, name.c_str(), NULL, NULL);
+void Window::create() {
+    window =
+        glfwCreateWindow(size.width, size.height, name.c_str(), NULL, NULL);
     if (!window) {
         throw std::runtime_error("Failed to create window");
     }
@@ -88,23 +81,19 @@ void Window::create()
     imgui_window_manager->init(window);
 }
 
-void Window::on_update()
-{
+void Window::on_update() {
     glfwPollEvents();
     imgui_window_manager->set_size(size.width, size.height);
-    imgui_window_manager->render([=]() {
-        on_update_callback();
-    });
+    imgui_window_manager->render([=]() { on_update_callback(); });
     glfwSwapBuffers(window);
 }
 
-const WindowSize& Window::get_size()
-{
-    glfwGetFramebufferSize(window, &size.width, &size.height); // update size of window
+const WindowSize& Window::get_size() {
+    glfwGetFramebufferSize(window, &size.width,
+                           &size.height); // update size of window
     return size;
 };
 
-void Window::set_callback(const std::function<void(void)>& callback)
-{
+void Window::set_callback(const std::function<void(void)>& callback) {
     on_update_callback = callback;
 }

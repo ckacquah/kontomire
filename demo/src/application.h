@@ -1,5 +1,5 @@
-#ifndef __OPENGL_CPP_TEMPLATE_APPLICATION__
-#define __OPENGL_CPP_TEMPLATE_APPLICATION__
+#ifndef __KONTOMIRE_APPLICATION__
+#define __KONTOMIRE_APPLICATION__
 
 #include <memory>
 #include <vector>
@@ -10,19 +10,18 @@
 #include "window.h"
 
 class Application {
-private:
-    std::unique_ptr<Window> window {};
-    std::vector<std::unique_ptr<Layer>> layers {};
+  private:
+    std::unique_ptr<Window> window{};
+    std::vector<std::unique_ptr<Layer>> layers{};
 
-public:
+  public:
     void run();
 
     Application();
 };
 
 Application::Application()
-    : window(std::make_unique<Window>("Kontomire Demo"))
-{
+    : window(std::make_unique<Window>("Kontomire Demo")) {
     layers.push_back(std::make_unique<TestLayer1>());
     layers.push_back(std::make_unique<OpenGL_Layer>());
     window->create();
@@ -36,11 +35,10 @@ Application::Application()
     });
 }
 
-void Application::run()
-{
+void Application::run() {
     while (!window->is_closed()) {
         window->on_update();
     }
 }
 
-#endif // __OPENGL_CPP_TEMPLATE_APPLICATION__
+#endif // __KONTOMIRE_APPLICATION__

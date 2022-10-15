@@ -4,11 +4,10 @@
 #include "kontomire/core/renderAPI.h"
 #include "kontomire/platform/opengl/framebuffer.h"
 
-
 namespace Kontomire {
 
-std::shared_ptr<FrameBuffer> FrameBuffer::create(const FramebufferSpecification& spec)
-{
+std::shared_ptr<FrameBuffer>
+FrameBuffer::create(const FramebufferSpecification& spec) {
     switch (RenderAPI::get_API()) {
     case RenderAPI::API::None:
         return nullptr;

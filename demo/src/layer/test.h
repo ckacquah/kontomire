@@ -1,5 +1,5 @@
-#ifndef __OPENGL_CPP_TEMPLATE_TEST_LAYER__
-#define __OPENGL_CPP_TEMPLATE_TEST_LAYER__
+#ifndef __KONTOMIRE_TEST_LAYER__
+#define __KONTOMIRE_TEST_LAYER__
 
 #include <vector>
 
@@ -8,12 +8,11 @@
 
 #include "layer.h"
 
-std::vector<int> bar_data { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+std::vector<int> bar_data{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
 class TestLayer1 : public Layer {
-public:
-    void update() const noexcept override
-    {
+  public:
+    void update() const noexcept override {
         ImGui::Begin("Testing 1 Layer");
         if (ImPlot::BeginPlot("My Plot")) {
             ImPlot::PlotBars("My Bar Plot", bar_data.data(), 11);
@@ -24,9 +23,8 @@ public:
 };
 
 class TestLayer2 : public Layer {
-public:
-    void update() const noexcept override
-    {
+  public:
+    void update() const noexcept override {
         ImGui::Begin("Testing 2 Layer");
         if (ImPlot::BeginPlot("My Plot")) {
             ImPlot::PlotBars("My Bar Plot", bar_data.data(), 11);
@@ -37,9 +35,8 @@ public:
 };
 
 class TestLayer3 : public Layer {
-public:
-    void update() const noexcept override
-    {
+  public:
+    void update() const noexcept override {
         ImGui::Begin("Testing 3 Layer");
         if (ImPlot::BeginPlot("My Plot")) {
             ImPlot::PlotBars("My Bar Plot", bar_data.data(), 11);
@@ -50,9 +47,8 @@ public:
 };
 
 class TestLayer4 : public Layer {
-public:
-    void update() const noexcept override
-    {
+  public:
+    void update() const noexcept override {
         ImGui::Begin("Testing 4 Layer");
         if (ImPlot::BeginPlot("My Plot")) {
             ImPlot::PlotBars("My Bar Plot", bar_data.data(), 11);
@@ -62,4 +58,4 @@ public:
     }
 };
 
-#endif // __OPENGL_CPP_TEMPLATE_TEST_LAYER__
+#endif // __KONTOMIRE_TEST_LAYER__

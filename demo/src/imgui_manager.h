@@ -1,5 +1,5 @@
-#ifndef __OPENGL_CPP_TEMPLATE_IMGUI_LAYER__
-#define __OPENGL_CPP_TEMPLATE_IMGUI_LAYER__
+#ifndef __KONTOMIRE_IMGUI_LAYER__
+#define __KONTOMIRE_IMGUI_LAYER__
 
 #include <array>
 #include <functional>
@@ -17,13 +17,13 @@
 #include <imgui/backends/imgui_impl_opengl3.h>
 
 class ImguiWindowManager {
-private:
-    ImVec4 clear_color { ImVec4(1.0f, 1.0f, 1.0f, 1.0f) };
-    std::string glsl_version {};
-    int _width {}, _height {};
-    GLFWwindow* window_ptr {};
+  private:
+    ImVec4 clear_color{ImVec4(1.0f, 1.0f, 1.0f, 1.0f)};
+    std::string glsl_version{};
+    int _width{}, _height{};
+    GLFWwindow* window_ptr{};
 
-public:
+  public:
     void init(GLFWwindow* window);
     void set_size(int width, int height);
     void render(const std::function<void(void)>& callback) const;
@@ -32,4 +32,4 @@ public:
     ~ImguiWindowManager();
 };
 
-#endif // __OPENGL_CPP_TEMPLATE_IMGUI_LAYER__
+#endif // __KONTOMIRE_IMGUI_LAYER__

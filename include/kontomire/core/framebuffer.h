@@ -1,5 +1,5 @@
-#ifndef __OPENGL_CPP_TEMPLATE_RENDERER_FRAMEBUFFER__
-#define __OPENGL_CPP_TEMPLATE_RENDERER_FRAMEBUFFER__
+#ifndef __KONTOMIRE_RENDERER_FRAMEBUFFER__
+#define __KONTOMIRE_RENDERER_FRAMEBUFFER__
 
 #include <memory>
 #include <stdint.h>
@@ -24,9 +24,7 @@ enum class FramebufferTextureFormat {
 struct FramebufferTextureSpecification {
     FramebufferTextureSpecification() = default;
     FramebufferTextureSpecification(FramebufferTextureFormat format)
-        : texture_format(format)
-    {
-    }
+        : texture_format(format) {}
 
     FramebufferTextureFormat texture_format = FramebufferTextureFormat::None;
     // TODO: filtering/wrap
@@ -34,10 +32,9 @@ struct FramebufferTextureSpecification {
 
 struct FramebufferAttachmentSpecification {
     FramebufferAttachmentSpecification() = default;
-    FramebufferAttachmentSpecification(std::initializer_list<FramebufferTextureSpecification> attachments)
-        : attachments(attachments)
-    {
-    }
+    FramebufferAttachmentSpecification(
+        std::initializer_list<FramebufferTextureSpecification> attachments)
+        : attachments(attachments) {}
 
     std::vector<FramebufferTextureSpecification> attachments;
 };
@@ -51,7 +48,7 @@ struct FramebufferSpecification {
 };
 
 class FrameBuffer {
-public:
+  public:
     virtual ~FrameBuffer() = default;
 
     virtual void bind() = 0;
@@ -64,9 +61,10 @@ public:
     virtual void clear_attachment(uint32_t attachmentIndex, int value) = 0;
     virtual uint32_t get_color_attachment_id(uint32_t index = 0) const = 0;
 
-    static std::shared_ptr<FrameBuffer> create(const FramebufferSpecification& spec);
+    static std::shared_ptr<FrameBuffer>
+    create(const FramebufferSpecification& spec);
 };
 
 } // namespace Kontomire
 
-#endif // __OPENGL_CPP_TEMPLATE_RENDERER_FRAMEBUFFER__
+#endif // __KONTOMIRE_RENDERER_FRAMEBUFFER__

@@ -1,9 +1,10 @@
-#ifndef __OPENGL_CPP_TEMPLATE_RENDERER_BUFFER__
-#define __OPENGL_CPP_TEMPLATE_RENDERER_BUFFER__
+#ifndef __KONTOMIRE_RENDERER_BUFFER__
+#define __KONTOMIRE_RENDERER_BUFFER__
+
+#include <stdint.h>
 
 #include <functional>
 #include <memory>
-#include <stdint.h>
 
 namespace Kontomire {
 
@@ -21,8 +22,7 @@ enum class ShaderDataType {
     Bool
 };
 
-static uint32_t ShaderDataTypeSize(ShaderDataType type)
-{
+static uint32_t ShaderDataTypeSize(ShaderDataType type) {
     switch (type) {
     case ShaderDataType::Float:
         return 4;
@@ -59,17 +59,12 @@ struct BufferElement {
 
     BufferElement() = default;
 
-    BufferElement(ShaderDataType type, const std::string& name, bool normalized = false)
-        : name(name)
-        , type(type)
-        , size(ShaderDataTypeSize(type))
-        , offset(0)
-        , normalized(normalized)
-    {
-    }
+    BufferElement(ShaderDataType type, const std::string& name,
+                  bool normalized = false)
+        : name(name), type(type), size(ShaderDataTypeSize(type)), offset(0),
+          normalized(normalized) {}
 
-    uint32_t get_component_count() const
-    {
+    uint32_t get_component_count() const {
         switch (type) {
         case ShaderDataType::Float:
             return 1;
@@ -100,14 +95,13 @@ struct BufferElement {
 };
 
 class BufferLayout {
-private:
+  private:
     uint32_t _stride;
     std::vector<BufferElement> _elements;
 
-public:
+  public:
     BufferLayout(std::initializer_list<BufferElement> elements)
-        : _elements(elements)
-    {
+        : _elements(elements) {
         // Calculate stride and offset
         size_t offset = 0;
         _stride = 0;
@@ -119,32 +113,40 @@ public:
     }
 
     uint32_t get_stride() const { return _stride; }
-    const std::vector<BufferElement>& get_elements() const { return _elements; };
+    const std::vector<BufferElement>& get_elements() const {
+        return _elements;
+    };
 
-    std::vector<BufferElement>::const_iterator end() const { return _elements.end(); }
-    std::vector<BufferElement>::const_iterator begin() const { return _elements.begin(); }
+    std::vector<BufferElement>::const_iterator end() const {
+        return _elements.end();
+    }
+    std::vector<BufferElement>::const_iterator begin() const {
+        return _elements.begin();
+    }
 };
 
 class VertexBuffer {
-public:
+  public:
     virtual void bind() const = 0;
     virtual void unbind() const = 0;
 
     virtual void set_layout(const BufferLayout& layout) = 0;
     virtual const BufferLayout& get_layout() const = 0;
 
-    static std::shared_ptr<VertexBuffer> create(const float* vertices, uint32_t size);
+    static std::shared_ptr<VertexBuffer> create(const float* vertices,
+                                                uint32_t size);
 };
 
 class IndexBuffer {
-public:
+  public:
     virtual void bind() const = 0;
     virtual void unbind() const = 0;
 
     virtual uint32_t get_count() const = 0;
-    static std::shared_ptr<IndexBuffer> create(const uint32_t* indices, uint32_t size);
+    static std::shared_ptr<IndexBuffer> create(const uint32_t* indices,
+                                               uint32_t size);
 };
 
 } // namespace Kontomire
 
-#endif // __OPENGL_CPP_TEMPLATE_RENDERER_BUFFER__
+#endif // __KONTOMIRE_RENDERER_BUFFER__

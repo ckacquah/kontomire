@@ -16,29 +16,25 @@
 #include "imgui_manager.h"
 
 ImguiWindowManager::ImguiWindowManager(const std::string& glsl_version_str)
-    : glsl_version(glsl_version_str)
-{
+    : glsl_version(glsl_version_str) {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImPlot::CreateContext();
 }
 
-ImguiWindowManager::~ImguiWindowManager()
-{
+ImguiWindowManager::~ImguiWindowManager() {
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImPlot::DestroyContext();
     ImGui::DestroyContext();
 }
 
-void ImguiWindowManager::set_size(int width, int height)
-{
+void ImguiWindowManager::set_size(int width, int height) {
     _width = width;
     _height = height;
 };
 
-void ImguiWindowManager::init(GLFWwindow* window)
-{
+void ImguiWindowManager::init(GLFWwindow* window) {
     window_ptr = window;
     ImGuiIO& io = ImGui::GetIO();
     (void)io;
@@ -61,8 +57,8 @@ void ImguiWindowManager::init(GLFWwindow* window)
     ImGui_ImplGlfw_InitForOpenGL(window_ptr, true);
 }
 
-void ImguiWindowManager::render(const std::function<void(void)>& callback) const
-{
+void ImguiWindowManager::render(
+    const std::function<void(void)>& callback) const {
     // Start the Dear ImGui frame
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
@@ -73,7 +69,8 @@ void ImguiWindowManager::render(const std::function<void(void)>& callback) const
     ImGui::Render();
 
     glViewport(0, 0, _height, _width);
-    glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+    glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w,
+                 clear_color.z * clear_color.w, clear_color.w);
     glClear(GL_COLOR_BUFFER_BIT);
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 

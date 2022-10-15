@@ -1,12 +1,12 @@
-#include <cassert>
+#include "kontomire/platform/opengl/vertex_arrays.h"
+
 #include <glad/glad.h>
 
-#include "kontomire/platform/opengl/vertex_arrays.h"
+#include <cassert>
 
 namespace Kontomire {
 
-static GLenum convert_to_opengl_base_type(ShaderDataType type)
-{
+static GLenum convert_to_opengl_base_type(ShaderDataType type) {
     switch (type) {
     case ShaderDataType::Float:
         return GL_FLOAT;
@@ -35,28 +35,16 @@ static GLenum convert_to_opengl_base_type(ShaderDataType type)
     return 0;
 }
 
-OpenGLVertexArray::OpenGLVertexArray()
-{
-    glCreateVertexArrays(1, &_id);
-}
+OpenGLVertexArray::OpenGLVertexArray() { glCreateVertexArrays(1, &_id); }
 
-OpenGLVertexArray::~OpenGLVertexArray()
-{
-    glDeleteVertexArrays(1, &_id);
-}
+OpenGLVertexArray::~OpenGLVertexArray() { glDeleteVertexArrays(1, &_id); }
 
-void OpenGLVertexArray::bind() const
-{
-    glBindVertexArray(_id);
-}
+void OpenGLVertexArray::bind() const { glBindVertexArray(_id); }
 
-void OpenGLVertexArray::unbind() const
-{
-    glBindVertexArray(0);
-}
+void OpenGLVertexArray::unbind() const { glBindVertexArray(0); }
 
-void OpenGLVertexArray::add_vertex_buffer(const std::shared_ptr<VertexBuffer>& buffer)
-{
+void OpenGLVertexArray::add_vertex_buffer(
+    const std::shared_ptr<VertexBuffer>& buffer) {
     glBindVertexArray(_id);
     buffer->bind();
 
@@ -68,11 +56,10 @@ void OpenGLVertexArray::add_vertex_buffer(const std::shared_ptr<VertexBuffer>& b
         case ShaderDataType::Float3:
         case ShaderDataType::Float4: {
             glEnableVertexAttribArray(_vertex_buffer_index);
-            glVertexAttribPointer(_vertex_buffer_index,
-                element.get_component_count(),
+            glVertexAttribPointer(
+                _vertex_buffer_index, element.get_component_count(),
                 convert_to_opengl_base_type(element.type),
-                element.normalized ? GL_TRUE : GL_FALSE,
-                layout.get_stride(),
+                element.normalized ? GL_TRUE : GL_FALSE, layout.get_stride(),
                 (const void*)element.offset);
             _vertex_buffer_index++;
             break;
@@ -83,10 +70,9 @@ void OpenGLVertexArray::add_vertex_buffer(const std::shared_ptr<VertexBuffer>& b
         case ShaderDataType::Int4:
         case ShaderDataType::Bool: {
             glEnableVertexAttribArray(_vertex_buffer_index);
-            glVertexAttribIPointer(_vertex_buffer_index,
-                element.get_component_count(),
-                convert_to_opengl_base_type(element.type),
-                layout.get_stride(),
+            glVertexAttribIPointer(
+                _vertex_buffer_index, element.get_component_count(),
+                convert_to_opengl_base_type(element.type), layout.get_stride(),
                 (const void*)element.offset);
             _vertex_buffer_index++;
             break;
@@ -96,8 +82,8 @@ void OpenGLVertexArray::add_vertex_buffer(const std::shared_ptr<VertexBuffer>& b
             uint8_t count = element.get_component_count();
             for (uint8_t i = 0; i < count; i++) {
                 glEnableVertexAttribArray(_vertex_buffer_index);
-                glVertexAttribPointer(_vertex_buffer_index,
-                    count,
+                glVertexAttribPointer(
+                    _vertex_buffer_index, count,
                     convert_to_opengl_base_type(element.type),
                     element.normalized ? GL_TRUE : GL_FALSE,
                     layout.get_stride(),
@@ -115,15 +101,15 @@ void OpenGLVertexArray::add_vertex_buffer(const std::shared_ptr<VertexBuffer>& b
     _vertex_buffers.push_back(buffer);
 }
 
-void OpenGLVertexArray::set_index_buffer(const std::shared_ptr<IndexBuffer>& buffer)
-{
+void OpenGLVertexArray::set_index_buffer(
+    const std::shared_ptr<IndexBuffer>& buffer) {
     glBindVertexArray(_id);
     buffer->bind();
     _index_buffer = buffer;
 }
 
-const std::shared_ptr<IndexBuffer>& OpenGLVertexArray::get_index_buffer() const
-{
+const std::shared_ptr<IndexBuffer>&
+OpenGLVertexArray::get_index_buffer() const {
     return _index_buffer;
 }
 

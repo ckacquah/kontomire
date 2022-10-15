@@ -1,5 +1,5 @@
-#ifndef __OPENGL_CPP_TEMPLATE_OPENGL_LAYER__
-#define __OPENGL_CPP_TEMPLATE_OPENGL_LAYER__
+#ifndef __KONTOMIRE_OPENGL_LAYER__
+#define __KONTOMIRE_OPENGL_LAYER__
 
 #include <iostream>
 #include <vector>
@@ -14,71 +14,72 @@
 #include "kontomire/core/vertex_arrays.h"
 #include "layer.h"
 
-const char* vertexShaderSource = "#version 330 core\n"
-                                 "layout (location = 0) in vec3 aPos;\n"
-                                 "layout (location = 1) in vec4 aColor;\n"
-                                 "out vec3 vPos;\n"
-                                 "out vec4 vColor;\n"
-                                 "void main()\n"
-                                 "{\n"
-                                 "   vPos = aPos;\n"
-                                 "   vColor = aColor;\n"
-                                 "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-                                 "}\0";
+const char* vertexShaderSource =
+    "#version 330 core\n"
+    "layout (location = 0) in vec3 aPos;\n"
+    "layout (location = 1) in vec4 aColor;\n"
+    "out vec3 vPos;\n"
+    "out vec4 vColor;\n"
+    "void main()\n"
+    "{\n"
+    "   vPos = aPos;\n"
+    "   vColor = aColor;\n"
+    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+    "}\0";
 
-const char* fragmentShaderSource = "#version 330 core\n"
-                                   "layout(location = 0) out vec4 color;\n"
-                                   "in vec3 vPos;\n"
-                                   "in vec4 vColor;\n"
-                                   "void main()\n"
-                                   "{\n"
-                                   "   color = vec4(vColor.x, vColor.y, vColor.z, 1.0f);\n"
-                                   "}\0";
+const char* fragmentShaderSource =
+    "#version 330 core\n"
+    "layout(location = 0) out vec4 color;\n"
+    "in vec3 vPos;\n"
+    "in vec4 vColor;\n"
+    "void main()\n"
+    "{\n"
+    "   color = vec4(vColor.x, vColor.y, vColor.z, 1.0f);\n"
+    "}\0";
 
 class OpenGL_Layer : public Layer {
-private:
-    int success {};
+  private:
+    int success{};
     char infoLog[512];
-    unsigned int vertexShader {};
-    unsigned int fragmentShader {};
-    unsigned int shaderProgram {};
-    std::shared_ptr<Kontomire::RenderAPI> api {};
-    std::shared_ptr<Kontomire::FrameBuffer> framebuffer {};
-    std::shared_ptr<Kontomire::VertexArray> vertex_array {};
+    unsigned int vertexShader{};
+    unsigned int fragmentShader{};
+    unsigned int shaderProgram{};
+    std::shared_ptr<Kontomire::RenderAPI> api{};
+    std::shared_ptr<Kontomire::FrameBuffer> framebuffer{};
+    std::shared_ptr<Kontomire::VertexArray> vertex_array{};
 
-public:
-    ~OpenGL_Layer()
-    {
+  public:
+    ~OpenGL_Layer() {
         glDeleteShader(vertexShader);
         glDeleteShader(fragmentShader);
     }
 
-    void init() noexcept override
-    {
+    void init() noexcept override {
         api = Kontomire::RenderAPI::create();
         vertex_array = Kontomire::VertexArray::create();
 
-        float vertices[3 * 7] = {
-            -0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
-            0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
-            0.0f, 0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
-        };
+        float vertices[3 * 7] = {-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
+                                 0.5f,  -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
+                                 0.0f,  0.5f,  0.0f, 0.8f, 0.8f, 0.2f, 1.0f};
 
-        auto vertex_buffer = Kontomire::VertexBuffer::create(vertices, sizeof(vertices));
+        auto vertex_buffer =
+            Kontomire::VertexBuffer::create(vertices, sizeof(vertices));
         Kontomire::BufferLayout layout = {
-            { Kontomire::ShaderDataType::Float3, "aPos" },
-            { Kontomire::ShaderDataType::Float4, "aColor" }
-        };
+            {Kontomire::ShaderDataType::Float3, "aPos"},
+            {Kontomire::ShaderDataType::Float4, "aColor"}};
         vertex_buffer->set_layout(layout);
         vertex_array->add_vertex_buffer(vertex_buffer);
 
-        uint32_t indices[3] = { 0, 1, 2 };
+        uint32_t indices[3] = {0, 1, 2};
 
-        auto index_buffer = Kontomire::IndexBuffer::create(indices, sizeof(indices) / sizeof(uint32_t));
+        auto index_buffer = Kontomire::IndexBuffer::create(
+            indices, sizeof(indices) / sizeof(uint32_t));
         vertex_array->set_index_buffer(index_buffer);
 
         Kontomire::FramebufferSpecification fbSpec;
-        fbSpec.attachments = { Kontomire::FramebufferTextureFormat::RGBA8, Kontomire::FramebufferTextureFormat::RED_INTEGER, Kontomire::FramebufferTextureFormat::Depth };
+        fbSpec.attachments = {Kontomire::FramebufferTextureFormat::RGBA8,
+                              Kontomire::FramebufferTextureFormat::RED_INTEGER,
+                              Kontomire::FramebufferTextureFormat::Depth};
         fbSpec.width = 1280;
         fbSpec.height = 720;
         framebuffer = Kontomire::FrameBuffer::create(fbSpec);
@@ -109,8 +110,7 @@ public:
         glLinkProgram(shaderProgram);
     };
 
-    void update() const noexcept override
-    {
+    void update() const noexcept override {
 
         framebuffer->bind();
 
@@ -129,7 +129,8 @@ public:
         ImGui::Begin("Kontomire");
         {
             ImGui::BeginChild("Viewport");
-            ImGui::Image(reinterpret_cast<void*>(texture), ImGui::GetWindowSize(), ImVec2 { 0, 1 }, ImVec2 { 1, 0 });
+            ImGui::Image(reinterpret_cast<void*>(texture),
+                         ImGui::GetWindowSize(), ImVec2{0, 1}, ImVec2{1, 0});
             ImGui::EndChild();
         }
         ImGui::End();
@@ -138,4 +139,4 @@ public:
     }
 };
 
-#endif // __OPENGL_CPP_TEMPLATE_OPENGL_LAYER__
+#endif // __KONTOMIRE_OPENGL_LAYER__

@@ -8,56 +8,42 @@ namespace Kontomire {
 /*******  Vertex Buffer  ********/
 /********************************/
 
-OpenGLVertexBuffer::OpenGLVertexBuffer(const float* vertices, uint32_t size)
-{
+OpenGLVertexBuffer::OpenGLVertexBuffer(const float* vertices, uint32_t size) {
     glCreateBuffers(1, &_id);
     glBindBuffer(GL_ARRAY_BUFFER, _id);
     glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
 }
 
-OpenGLVertexBuffer::~OpenGLVertexBuffer()
-{
-    glDeleteBuffers(1, &_id);
-}
+OpenGLVertexBuffer::~OpenGLVertexBuffer() { glDeleteBuffers(1, &_id); }
 
-void OpenGLVertexBuffer::bind() const
-{
-    glBindBuffer(GL_ARRAY_BUFFER, _id);
-}
+void OpenGLVertexBuffer::bind() const { glBindBuffer(GL_ARRAY_BUFFER, _id); }
 
-void OpenGLVertexBuffer::unbind() const
-{
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-}
+void OpenGLVertexBuffer::unbind() const { glBindBuffer(GL_ARRAY_BUFFER, 0); }
 
 /********************************/
 /*******  Index Buffer  *********/
 /********************************/
 
 OpenGLIndexBuffer::OpenGLIndexBuffer(const uint32_t* indices, uint32_t count)
-    : _count(count)
-{
+    : _count(count) {
     glCreateBuffers(1, &_id);
 
     // GL_ELEMENT_ARRAY_BUFFER is not valid without an actively bound VAO
-    // Binding with GL_ARRAY_BUFFER allows the data to be loaded regardless of VAO state.
+    // Binding with GL_ARRAY_BUFFER allows the data to be loaded regardless of
+    // VAO state.
     glBindBuffer(GL_ARRAY_BUFFER, _id);
-    glBufferData(GL_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, count * sizeof(uint32_t), indices,
+                 GL_STATIC_DRAW);
 }
 
-OpenGLIndexBuffer::~OpenGLIndexBuffer()
-{
-    glDeleteBuffers(1, &_id);
-}
+OpenGLIndexBuffer::~OpenGLIndexBuffer() { glDeleteBuffers(1, &_id); }
 
-void OpenGLIndexBuffer::bind() const
-{
+void OpenGLIndexBuffer::bind() const {
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _id);
 }
 
-void OpenGLIndexBuffer::unbind() const
-{
+void OpenGLIndexBuffer::unbind() const {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 

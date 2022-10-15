@@ -13,7 +13,7 @@ class VertexArray
 
     virtual void set_index_buffer(const std::shared_ptr<IndexBuffer>& buffer) = 0;
 
-    virtual const std::shared_ptr<IndexBuffer>& get_index_buffer() const = 0;
+    virtual const std::shared_ptr<IndexBuffer>& index_buffer() const = 0;
 
     virtual void bind() const = 0;
     virtual void unbind() const = 0;

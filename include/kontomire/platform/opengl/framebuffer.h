@@ -24,24 +24,24 @@ class OpenGLFramebuffer : public FrameBuffer
 
     virtual uint32_t get_color_attachment_id(uint32_t index = 0) const override
     {
-        return _color_attachment[index];
+        return color_attachment_[index];
     }
 
     virtual const FramebufferSpecification& get_specification() const override
     {
-        return _specification;
+        return specification_;
     }
 
   private:
-    uint32_t _id = 0;
-    FramebufferSpecification _specification;
+    uint32_t id_ = 0;
+    FramebufferSpecification specification_;
 
-    std::vector<FramebufferTextureSpecification> _color_attachment_specification;
+    std::vector<FramebufferTextureSpecification> color_attachment_specification_;
 
-    FramebufferTextureSpecification _depth_attachment_specification = FramebufferTextureFormat::None;
+    FramebufferTextureSpecification depth_attachment_specification_ = FramebufferTextureFormat::None;
 
-    std::vector<uint32_t> _color_attachment;
-    uint32_t _depth_attachment = 0;
+    std::vector<uint32_t> color_attachment_;
+    uint32_t depth_attachment_ = 0;
 };
 
 } // namespace Kontomire

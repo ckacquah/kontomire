@@ -11,8 +11,8 @@ namespace Kontomire
 class OpenGLVertexBuffer : public VertexBuffer
 {
   private:
-    uint32_t _id{};
-    BufferLayout _layout{};
+    uint32_t id_{};
+    BufferLayout layout_{};
 
   public:
     OpenGLVertexBuffer(){};
@@ -22,13 +22,13 @@ class OpenGLVertexBuffer : public VertexBuffer
     void bind() const override;
     void unbind() const override;
 
-    const BufferLayout& get_layout() const override
+    const BufferLayout& layout() const override
     {
-        return _layout;
+        return layout_;
     };
     void set_layout(const BufferLayout& layout) override
     {
-        _layout = layout;
+        layout_ = layout;
     };
 };
 
@@ -41,14 +41,14 @@ class OpenGLIndexBuffer : public IndexBuffer
     virtual void bind() const override;
     virtual void unbind() const override;
 
-    virtual uint32_t get_count() const override
+    virtual uint32_t count() const override
     {
-        return _count;
+        return count_;
     }
 
   private:
-    uint32_t _id;
-    uint32_t _count;
+    uint32_t id_;
+    uint32_t count_;
 };
 
 } // namespace Kontomire

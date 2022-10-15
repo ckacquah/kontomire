@@ -11,10 +11,10 @@ namespace Kontomire
 class OpenGLVertexArray : public VertexArray
 {
   private:
-    uint32_t _id{};
-    uint32_t _vertex_buffer_index{};
-    std::vector<std::shared_ptr<VertexBuffer>> _vertex_buffers;
-    std::shared_ptr<IndexBuffer> _index_buffer;
+    uint32_t id_{};
+    uint32_t vertex_buffer_index_{};
+    std::vector<std::shared_ptr<VertexBuffer>> vertex_buffers_;
+    std::shared_ptr<IndexBuffer> index_buffer_;
 
   public:
     OpenGLVertexArray();
@@ -24,7 +24,7 @@ class OpenGLVertexArray : public VertexArray
     virtual void add_vertex_buffer(const std::shared_ptr<VertexBuffer>& buffer) override;
 
     virtual void set_index_buffer(const std::shared_ptr<IndexBuffer>& buffer) override;
-    virtual const std::shared_ptr<IndexBuffer>& get_index_buffer() const override;
+    virtual const std::shared_ptr<IndexBuffer>& index_buffer() const override;
 
     virtual void bind() const override;
     virtual void unbind() const override;

@@ -47,11 +47,12 @@ struct FramebufferAttachmentSpecification
 
 struct FramebufferSpecification
 {
-    uint32_t width = 0, height = 0;
-    FramebufferAttachmentSpecification attachments;
+    uint32_t width = 0;
+    uint32_t height = 0;
     uint32_t samples = 1;
 
     bool swap_chain_target = false;
+    FramebufferAttachmentSpecification attachments;
 };
 
 class FrameBuffer

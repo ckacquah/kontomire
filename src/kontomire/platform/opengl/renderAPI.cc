@@ -32,7 +32,7 @@ void OpenGLRenderAPI::set_viewport(uint32_t x, uint32_t y, uint32_t width, uint3
 void OpenGLRenderAPI::draw_indexed(const std::shared_ptr<VertexArray>& vertex_array, uint32_t index_count)
 {
     vertex_array->bind();
-    uint32_t count = index_count ? index_count : vertex_array->get_index_buffer()->get_count();
+    uint32_t count = index_count ? index_count : vertex_array->index_buffer()->count();
     glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
 }
 

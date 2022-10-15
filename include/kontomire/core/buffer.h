@@ -104,39 +104,39 @@ struct BufferElement
 class BufferLayout
 {
   private:
-    uint32_t _stride;
-    std::vector<BufferElement> _elements;
+    uint32_t stride_;
+    std::vector<BufferElement> elements_;
 
   public:
-    BufferLayout(std::initializer_list<BufferElement> elements) : _elements(elements)
+    BufferLayout(std::initializer_list<BufferElement> elements) : elements_(elements)
     {
         // Calculate stride and offset
         size_t offset = 0;
-        _stride = 0;
-        for (auto& element : _elements)
+        stride_ = 0;
+        for (auto& element : elements_)
         {
             element.offset = offset;
             offset += element.size;
-            _stride += element.size;
+            stride_ += element.size;
         }
     }
 
     uint32_t get_stride() const
     {
-        return _stride;
+        return stride_;
     }
-    const std::vector<BufferElement>& get_elements() const
+    const std::vector<BufferElement>& elements() const
     {
-        return _elements;
+        return elements_;
     };
 
     std::vector<BufferElement>::const_iterator end() const
     {
-        return _elements.end();
+        return elements_.end();
     }
     std::vector<BufferElement>::const_iterator begin() const
     {
-        return _elements.begin();
+        return elements_.begin();
     }
 };
 
@@ -147,7 +147,7 @@ class VertexBuffer
     virtual void unbind() const = 0;
 
     virtual void set_layout(const BufferLayout& layout) = 0;
-    virtual const BufferLayout& get_layout() const = 0;
+    virtual const BufferLayout& layout() const = 0;
 
     static std::shared_ptr<VertexBuffer> create(const float* vertices, uint32_t size);
 };
@@ -158,7 +158,7 @@ class IndexBuffer
     virtual void bind() const = 0;
     virtual void unbind() const = 0;
 
-    virtual uint32_t get_count() const = 0;
+    virtual uint32_t count() const = 0;
     static std::shared_ptr<IndexBuffer> create(const uint32_t* indices, uint32_t size);
 };
 

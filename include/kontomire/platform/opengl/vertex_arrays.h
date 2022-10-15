@@ -5,9 +5,11 @@
 
 #include "kontomire/core/vertex_arrays.h"
 
-namespace Kontomire {
+namespace Kontomire
+{
 
-class OpenGLVertexArray : public VertexArray {
+class OpenGLVertexArray : public VertexArray
+{
   private:
     uint32_t _id{};
     uint32_t _vertex_buffer_index{};
@@ -19,13 +21,10 @@ class OpenGLVertexArray : public VertexArray {
     ~OpenGLVertexArray();
 
     // virtual const VertexBuffer& get_vertex_buffer() const override;
-    virtual void
-    add_vertex_buffer(const std::shared_ptr<VertexBuffer>& buffer) override;
+    virtual void add_vertex_buffer(const std::shared_ptr<VertexBuffer>& buffer) override;
 
-    virtual void
-    set_index_buffer(const std::shared_ptr<IndexBuffer>& buffer) override;
-    virtual const std::shared_ptr<IndexBuffer>&
-    get_index_buffer() const override;
+    virtual void set_index_buffer(const std::shared_ptr<IndexBuffer>& buffer) override;
+    virtual const std::shared_ptr<IndexBuffer>& get_index_buffer() const override;
 
     virtual void bind() const override;
     virtual void unbind() const override;

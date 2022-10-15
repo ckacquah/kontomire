@@ -3,15 +3,15 @@
 
 #include "buffer.h"
 
-namespace Kontomire {
+namespace Kontomire
+{
 
-class VertexArray {
+class VertexArray
+{
   public:
-    virtual void
-    add_vertex_buffer(const std::shared_ptr<VertexBuffer>& buffer) = 0;
+    virtual void add_vertex_buffer(const std::shared_ptr<VertexBuffer>& buffer) = 0;
 
-    virtual void
-    set_index_buffer(const std::shared_ptr<IndexBuffer>& buffer) = 0;
+    virtual void set_index_buffer(const std::shared_ptr<IndexBuffer>& buffer) = 0;
 
     virtual const std::shared_ptr<IndexBuffer>& get_index_buffer() const = 0;
 

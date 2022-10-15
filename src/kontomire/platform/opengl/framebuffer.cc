@@ -184,9 +184,8 @@ void OpenGLFramebuffer::resize(uint32_t width, uint32_t height) {
 }
 
 int OpenGLFramebuffer::read_pixel(uint32_t attachmentIndex, int x, int y) {
-
-    glReadBuffer(GL_COLOR_ATTACHMENT0 + attachmentIndex);
     int pixelData;
+    glReadBuffer(GL_COLOR_ATTACHMENT0 + attachmentIndex);
     glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
     return pixelData;
 }

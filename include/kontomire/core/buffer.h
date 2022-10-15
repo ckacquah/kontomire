@@ -6,9 +6,11 @@
 #include <functional>
 #include <memory>
 
-namespace Kontomire {
+namespace Kontomire
+{
 
-enum class ShaderDataType {
+enum class ShaderDataType
+{
     Float,
     Float2,
     Float3,
@@ -22,8 +24,10 @@ enum class ShaderDataType {
     Bool
 };
 
-static uint32_t ShaderDataTypeSize(ShaderDataType type) {
-    switch (type) {
+static uint32_t ShaderDataTypeSize(ShaderDataType type)
+{
+    switch (type)
+    {
     case ShaderDataType::Float:
         return 4;
     case ShaderDataType::Float2:
@@ -50,7 +54,8 @@ static uint32_t ShaderDataTypeSize(ShaderDataType type) {
     return 0;
 }
 
-struct BufferElement {
+struct BufferElement
+{
     std::string name;
     ShaderDataType type;
     uint32_t size;
@@ -59,13 +64,15 @@ struct BufferElement {
 
     BufferElement() = default;
 
-    BufferElement(ShaderDataType type, const std::string& name,
-                  bool normalized = false)
-        : name(name), type(type), size(ShaderDataTypeSize(type)), offset(0),
-          normalized(normalized) {}
+    BufferElement(ShaderDataType type, const std::string& name, bool normalized = false)
+        : name(name), type(type), size(ShaderDataTypeSize(type)), offset(0), normalized(normalized)
+    {
+    }
 
-    uint32_t get_component_count() const {
-        switch (type) {
+    uint32_t get_component_count() const
+    {
+        switch (type)
+        {
         case ShaderDataType::Float:
             return 1;
         case ShaderDataType::Float2:
@@ -94,38 +101,47 @@ struct BufferElement {
     }
 };
 
-class BufferLayout {
+class BufferLayout
+{
   private:
     uint32_t _stride;
     std::vector<BufferElement> _elements;
 
   public:
-    BufferLayout(std::initializer_list<BufferElement> elements)
-        : _elements(elements) {
+    BufferLayout(std::initializer_list<BufferElement> elements) : _elements(elements)
+    {
         // Calculate stride and offset
         size_t offset = 0;
         _stride = 0;
-        for (auto& element : _elements) {
+        for (auto& element : _elements)
+        {
             element.offset = offset;
             offset += element.size;
             _stride += element.size;
         }
     }
 
-    uint32_t get_stride() const { return _stride; }
-    const std::vector<BufferElement>& get_elements() const {
+    uint32_t get_stride() const
+    {
+        return _stride;
+    }
+    const std::vector<BufferElement>& get_elements() const
+    {
         return _elements;
     };
 
-    std::vector<BufferElement>::const_iterator end() const {
+    std::vector<BufferElement>::const_iterator end() const
+    {
         return _elements.end();
     }
-    std::vector<BufferElement>::const_iterator begin() const {
+    std::vector<BufferElement>::const_iterator begin() const
+    {
         return _elements.begin();
     }
 };
 
-class VertexBuffer {
+class VertexBuffer
+{
   public:
     virtual void bind() const = 0;
     virtual void unbind() const = 0;
@@ -133,18 +149,17 @@ class VertexBuffer {
     virtual void set_layout(const BufferLayout& layout) = 0;
     virtual const BufferLayout& get_layout() const = 0;
 
-    static std::shared_ptr<VertexBuffer> create(const float* vertices,
-                                                uint32_t size);
+    static std::shared_ptr<VertexBuffer> create(const float* vertices, uint32_t size);
 };
 
-class IndexBuffer {
+class IndexBuffer
+{
   public:
     virtual void bind() const = 0;
     virtual void unbind() const = 0;
 
     virtual uint32_t get_count() const = 0;
-    static std::shared_ptr<IndexBuffer> create(const uint32_t* indices,
-                                               uint32_t size);
+    static std::shared_ptr<IndexBuffer> create(const uint32_t* indices, uint32_t size);
 };
 
 } // namespace Kontomire

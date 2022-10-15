@@ -5,9 +5,11 @@
 
 #include "kontomire/core/buffer.h"
 
-namespace Kontomire {
+namespace Kontomire
+{
 
-class OpenGLVertexBuffer : public VertexBuffer {
+class OpenGLVertexBuffer : public VertexBuffer
+{
   private:
     uint32_t _id{};
     BufferLayout _layout{};
@@ -20,11 +22,18 @@ class OpenGLVertexBuffer : public VertexBuffer {
     void bind() const override;
     void unbind() const override;
 
-    const BufferLayout& get_layout() const override { return _layout; };
-    void set_layout(const BufferLayout& layout) override { _layout = layout; };
+    const BufferLayout& get_layout() const override
+    {
+        return _layout;
+    };
+    void set_layout(const BufferLayout& layout) override
+    {
+        _layout = layout;
+    };
 };
 
-class OpenGLIndexBuffer : public IndexBuffer {
+class OpenGLIndexBuffer : public IndexBuffer
+{
   public:
     OpenGLIndexBuffer(const uint32_t* indices, uint32_t count);
     virtual ~OpenGLIndexBuffer();
@@ -32,7 +41,10 @@ class OpenGLIndexBuffer : public IndexBuffer {
     virtual void bind() const override;
     virtual void unbind() const override;
 
-    virtual uint32_t get_count() const override { return _count; }
+    virtual uint32_t get_count() const override
+    {
+        return _count;
+    }
 
   private:
     uint32_t _id;

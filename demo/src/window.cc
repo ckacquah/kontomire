@@ -19,16 +19,19 @@
 #include "imgui_manager.h"
 #include "window.h"
 
-static void glfw_error_callback(int error, const char* description) {
+static void glfw_error_callback(int error, const char* description)
+{
     std::cerr << "GLFW Error " << error << " " << description << std::endl;
 }
 
-Window::Window(const std::string& name, int width, int height) : name(name) {
+Window::Window(const std::string& name, int width, int height) : name(name)
+{
     size.width = width;
     size.height = height;
 
     glfwSetErrorCallback(glfw_error_callback);
-    if (!glfwInit()) {
+    if (!glfwInit())
+    {
         throw std::runtime_error("Couldn't initialize GLFW library");
     }
 
@@ -57,43 +60,53 @@ Window::Window(const std::string& name, int width, int height) : name(name) {
     imgui_window_manager = std::make_unique<ImguiWindowManager>(glsl_version);
 }
 
-Window::~Window() {
-    if (window) {
+Window::~Window()
+{
+    if (window)
+    {
         glfwDestroyWindow(window);
     }
     glfwTerminate();
 }
 
-bool Window::is_closed() const { return glfwWindowShouldClose(window); }
+bool Window::is_closed() const
+{
+    return glfwWindowShouldClose(window);
+}
 
-void Window::create() {
-    window =
-        glfwCreateWindow(size.width, size.height, name.c_str(), NULL, NULL);
-    if (!window) {
+void Window::create()
+{
+    window = glfwCreateWindow(size.width, size.height, name.c_str(), NULL, NULL);
+    if (!window)
+    {
         throw std::runtime_error("Failed to create window");
     }
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // Enable vsync
 
-    if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))) {
+    if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
+    {
         throw std::runtime_error("Failed to initialize GLAD");
     }
     imgui_window_manager->init(window);
 }
 
-void Window::on_update() {
+void Window::on_update()
+{
     glfwPollEvents();
     imgui_window_manager->set_size(size.width, size.height);
     imgui_window_manager->render([=]() { on_update_callback(); });
     glfwSwapBuffers(window);
 }
 
-const WindowSize& Window::get_size() {
+const WindowSize& Window::get_size()
+{
     glfwGetFramebufferSize(window, &size.width,
                            &size.height); // update size of window
     return size;
 };
 
-void Window::set_callback(const std::function<void(void)>& callback) {
+void Window::set_callback(const std::function<void(void)>& callback)
+{
     on_update_callback = callback;
 }

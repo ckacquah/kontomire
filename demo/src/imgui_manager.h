@@ -16,7 +16,8 @@
 #include <imgui/backends/imgui_impl_glfw.h>
 #include <imgui/backends/imgui_impl_opengl3.h>
 
-class ImguiWindowManager {
+class ImguiWindowManager
+{
   private:
     ImVec4 clear_color{ImVec4(1.0f, 1.0f, 1.0f, 1.0f)};
     std::string glsl_version{};

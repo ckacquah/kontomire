@@ -1,7 +1,8 @@
 #ifndef __KONTOMIRE_LAYER__
 #define __KONTOMIRE_LAYER__
 
-class Layer {
+class Layer
+{
   public:
     virtual void init(){};
     virtual void destroy() const {};

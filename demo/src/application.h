@@ -9,7 +9,8 @@
 #include "layer/test.h"
 #include "window.h"
 
-class Application {
+class Application
+{
   private:
     std::unique_ptr<Window> window{};
     std::vector<std::unique_ptr<Layer>> layers{};
@@ -20,8 +21,8 @@ class Application {
     Application();
 };
 
-Application::Application()
-    : window(std::make_unique<Window>("Kontomire Demo")) {
+Application::Application() : window(std::make_unique<Window>("Kontomire Demo"))
+{
     layers.push_back(std::make_unique<TestLayer1>());
     layers.push_back(std::make_unique<OpenGL_Layer>());
     window->create();
@@ -35,8 +36,10 @@ Application::Application()
     });
 }
 
-void Application::run() {
-    while (!window->is_closed()) {
+void Application::run()
+{
+    while (!window->is_closed())
+    {
         window->on_update();
     }
 }

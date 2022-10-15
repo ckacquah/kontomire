@@ -10,12 +10,14 @@
 
 #include "imgui_manager.h"
 
-struct WindowSize {
+struct WindowSize
+{
     int width{};
     int height{};
 };
 
-class Window {
+class Window
+{
   private:
     GLFWwindow* window{};
 

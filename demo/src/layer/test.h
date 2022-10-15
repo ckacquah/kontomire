@@ -10,11 +10,14 @@
 
 std::vector<int> bar_data{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
-class TestLayer1 : public Layer {
+class TestLayer1 : public Layer
+{
   public:
-    void update() const noexcept override {
+    void update() const noexcept override
+    {
         ImGui::Begin("Testing 1 Layer");
-        if (ImPlot::BeginPlot("My Plot")) {
+        if (ImPlot::BeginPlot("My Plot"))
+        {
             ImPlot::PlotBars("My Bar Plot", bar_data.data(), 11);
             ImPlot::EndPlot();
         }
@@ -22,11 +25,14 @@ class TestLayer1 : public Layer {
     }
 };
 
-class TestLayer2 : public Layer {
+class TestLayer2 : public Layer
+{
   public:
-    void update() const noexcept override {
+    void update() const noexcept override
+    {
         ImGui::Begin("Testing 2 Layer");
-        if (ImPlot::BeginPlot("My Plot")) {
+        if (ImPlot::BeginPlot("My Plot"))
+        {
             ImPlot::PlotBars("My Bar Plot", bar_data.data(), 11);
             ImPlot::EndPlot();
         }
@@ -34,11 +40,14 @@ class TestLayer2 : public Layer {
     }
 };
 
-class TestLayer3 : public Layer {
+class TestLayer3 : public Layer
+{
   public:
-    void update() const noexcept override {
+    void update() const noexcept override
+    {
         ImGui::Begin("Testing 3 Layer");
-        if (ImPlot::BeginPlot("My Plot")) {
+        if (ImPlot::BeginPlot("My Plot"))
+        {
             ImPlot::PlotBars("My Bar Plot", bar_data.data(), 11);
             ImPlot::EndPlot();
         }
@@ -46,11 +55,14 @@ class TestLayer3 : public Layer {
     }
 };
 
-class TestLayer4 : public Layer {
+class TestLayer4 : public Layer
+{
   public:
-    void update() const noexcept override {
+    void update() const noexcept override
+    {
         ImGui::Begin("Testing 4 Layer");
-        if (ImPlot::BeginPlot("My Plot")) {
+        if (ImPlot::BeginPlot("My Plot"))
+        {
             ImPlot::PlotBars("My Bar Plot", bar_data.data(), 11);
             ImPlot::EndPlot();
         }

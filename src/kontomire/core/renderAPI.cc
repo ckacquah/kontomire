@@ -4,10 +4,13 @@
 #include <functional>
 #include <memory>
 
-namespace Kontomire {
+namespace Kontomire
+{
 
-std::shared_ptr<RenderAPI> RenderAPI::create() {
-    switch (_api) {
+std::shared_ptr<RenderAPI> RenderAPI::create()
+{
+    switch (_api)
+    {
     case RenderAPI::API::None:
     case RenderAPI::API::OpenGL:
         return std::make_shared<OpenGLRenderAPI>();

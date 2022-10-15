@@ -5,9 +5,11 @@
 #include <stdint.h>
 #include <vector>
 
-namespace Kontomire {
+namespace Kontomire
+{
 
-enum class FramebufferTextureFormat {
+enum class FramebufferTextureFormat
+{
     None = 0,
 
     // Color
@@ -21,25 +23,30 @@ enum class FramebufferTextureFormat {
     Depth = DEPTH24STENCIL8
 };
 
-struct FramebufferTextureSpecification {
+struct FramebufferTextureSpecification
+{
     FramebufferTextureSpecification() = default;
-    FramebufferTextureSpecification(FramebufferTextureFormat format)
-        : texture_format(format) {}
+    FramebufferTextureSpecification(FramebufferTextureFormat format) : texture_format(format)
+    {
+    }
 
     FramebufferTextureFormat texture_format = FramebufferTextureFormat::None;
     // TODO: filtering/wrap
 };
 
-struct FramebufferAttachmentSpecification {
+struct FramebufferAttachmentSpecification
+{
     FramebufferAttachmentSpecification() = default;
-    FramebufferAttachmentSpecification(
-        std::initializer_list<FramebufferTextureSpecification> attachments)
-        : attachments(attachments) {}
+    FramebufferAttachmentSpecification(std::initializer_list<FramebufferTextureSpecification> attachments)
+        : attachments(attachments)
+    {
+    }
 
     std::vector<FramebufferTextureSpecification> attachments;
 };
 
-struct FramebufferSpecification {
+struct FramebufferSpecification
+{
     uint32_t width = 0, height = 0;
     FramebufferAttachmentSpecification attachments;
     uint32_t samples = 1;
@@ -47,7 +54,8 @@ struct FramebufferSpecification {
     bool swap_chain_target = false;
 };
 
-class FrameBuffer {
+class FrameBuffer
+{
   public:
     virtual ~FrameBuffer() = default;
 
@@ -61,8 +69,7 @@ class FrameBuffer {
     virtual void clear_attachment(uint32_t attachmentIndex, int value) = 0;
     virtual uint32_t get_color_attachment_id(uint32_t index = 0) const = 0;
 
-    static std::shared_ptr<FrameBuffer>
-    create(const FramebufferSpecification& spec);
+    static std::shared_ptr<FrameBuffer> create(const FramebufferSpecification& spec);
 };
 
 } // namespace Kontomire

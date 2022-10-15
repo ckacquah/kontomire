@@ -31,11 +31,13 @@ message(STATUS "Started CMake for ${DEMO_APP} v${PROJECT_VERSION}...\n")
 # Project target
 add_library(${KONTOMIRE_RENDERER}
   ${PROJECT_SOURCE_DIR}/src/kontomire/core/buffer.cc
+  ${PROJECT_SOURCE_DIR}/src/kontomire/core/shader.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/core/renderAPI.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/core/renderer2d.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/core/framebuffer.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/core/vertex_arrays.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/platform/opengl/buffer.cc
+  ${PROJECT_SOURCE_DIR}/src/kontomire/platform/opengl/shader.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/platform/opengl/renderAPI.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/platform/opengl/framebuffer.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/platform/opengl/vertex_arrays.cc

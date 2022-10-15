@@ -3,9 +3,9 @@
 
 class Layer {
 public:
-    virtual void init() noexcept {};
-    virtual void destroy() const noexcept {};
-    virtual void update() const noexcept {};
+    virtual void init() {};
+    virtual void destroy() const {};
+    virtual void update() const {};
 };
 
 #endif // __OPENGL_CPP_TEMPLATE_LAYER__

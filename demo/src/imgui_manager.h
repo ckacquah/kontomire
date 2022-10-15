@@ -24,9 +24,9 @@ private:
     GLFWwindow* window_ptr {};
 
 public:
-    void init(GLFWwindow* window) noexcept;
-    void set_size(int width, int height) noexcept;
-    void render(const std::function<void(void)>& callback) const noexcept;
+    void init(GLFWwindow* window);
+    void set_size(int width, int height);
+    void render(const std::function<void(void)>& callback) const;
 
     ImguiWindowManager(const std::string& glsl_version_str);
     ~ImguiWindowManager();

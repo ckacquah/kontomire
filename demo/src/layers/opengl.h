@@ -8,11 +8,11 @@
 #include <imgui/imgui.h>
 #include <implot/implot.h>
 
-#include "kontomire/core/layer.h"
-#include "kontomire/renderer/buffer.h"
-#include "kontomire/renderer/framebuffer.h"
-#include "kontomire/renderer/renderAPI.h"
-#include "kontomire/renderer/vertex_arrays.h"
+#include "kontomire/core/buffer.h"
+#include "kontomire/core/framebuffer.h"
+#include "kontomire/core/renderAPI.h"
+#include "kontomire/core/vertex_arrays.h"
+#include "layers/layer.h"
 
 const char* vertexShaderSource = "#version 330 core\n"
                                  "layout (location = 0) in vec3 aPos;\n"
@@ -126,7 +126,7 @@ public:
 
         uint32_t texture = framebuffer->get_color_attachment_id();
 
-        ImGui::Begin("OpenGL Layer");
+        ImGui::Begin("Kontomire");
         {
             ImGui::BeginChild("Viewport");
             ImGui::Image(reinterpret_cast<void*>(texture), ImGui::GetWindowSize(), ImVec2 { 0, 1 }, ImVec2 { 1, 0 });

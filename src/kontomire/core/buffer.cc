@@ -1,12 +1,13 @@
 #include <memory>
 
+#include "kontomire/core/buffer.h"
+#include "kontomire/core/renderAPI.h"
 #include "kontomire/platform/opengl/buffer.h"
-#include "kontomire/renderer/buffer.h"
-#include "kontomire/renderer/renderAPI.h"
+
 
 namespace Kontomire {
 
-std::shared_ptr<VertexBuffer> VertexBuffer::create(const float* vertices, uint32_t size) noexcept
+std::shared_ptr<VertexBuffer> VertexBuffer::create(const float* vertices, uint32_t size)
 {
     switch (RenderAPI::get_API()) {
     case RenderAPI::API::None:
@@ -17,7 +18,7 @@ std::shared_ptr<VertexBuffer> VertexBuffer::create(const float* vertices, uint32
     return nullptr;
 }
 
-std::shared_ptr<IndexBuffer> IndexBuffer::create(const uint32_t* indices, uint32_t size) noexcept
+std::shared_ptr<IndexBuffer> IndexBuffer::create(const uint32_t* indices, uint32_t size)
 {
     switch (RenderAPI::get_API()) {
     case RenderAPI::API::None:

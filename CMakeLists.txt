@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.10)
 
-set(TARGET_NAME "kontomire-editor")
-set(RENDERER_NAME "kontomire")
+set(DEMO_APP "kontomire-demo")
+set(KONTOMIRE_RENDERER "kontomire")
 
-project(${TARGET_NAME} VERSION 1.0)
+project(${KONTOMIRE_RENDERER} VERSION 1.0)
 
 # specify the C++ standard
 set(CMAKE_CXX_STANDARD 20)
@@ -18,25 +18,33 @@ if(NOT CMAKE_BUILD_TYPE)
     FORCE)
 endif()
 
-message(STATUS "Started CMake for ${TARGET_NAME} v${PROJECT_VERSION}...\n")
+message(STATUS "Started CMake for ${DEMO_APP} v${PROJECT_VERSION}...\n")
 
-add_executable(
-  ${TARGET_NAME}
-  ${PROJECT_SOURCE_DIR}/src/main.cc
-  ${PROJECT_SOURCE_DIR}/src/window.cc
-  ${PROJECT_SOURCE_DIR}/src/imgui_manager.cc)
-
-add_library(${RENDERER_NAME}
-  ${PROJECT_SOURCE_DIR}/src/kontomire/renderer/buffer.cc
-  ${PROJECT_SOURCE_DIR}/src/kontomire/renderer/renderAPI.cc
-  ${PROJECT_SOURCE_DIR}/src/kontomire/renderer/renderer2d.cc
-  ${PROJECT_SOURCE_DIR}/src/kontomire/renderer/framebuffer.cc
-  ${PROJECT_SOURCE_DIR}/src/kontomire/renderer/vertex_arrays.cc
+# Project target
+add_library(${KONTOMIRE_RENDERER}
+  ${PROJECT_SOURCE_DIR}/src/kontomire/core/buffer.cc
+  ${PROJECT_SOURCE_DIR}/src/kontomire/core/renderAPI.cc
+  ${PROJECT_SOURCE_DIR}/src/kontomire/core/renderer2d.cc
+  ${PROJECT_SOURCE_DIR}/src/kontomire/core/framebuffer.cc
+  ${PROJECT_SOURCE_DIR}/src/kontomire/core/vertex_arrays.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/platform/opengl/buffer.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/platform/opengl/renderAPI.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/platform/opengl/framebuffer.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/platform/opengl/vertex_arrays.cc
 )
+
+target_include_directories(${KONTOMIRE_RENDERER} PUBLIC ${PROJECT_SOURCE_DIR}/deps)
+target_include_directories(${KONTOMIRE_RENDERER} PUBLIC ${PROJECT_SOURCE_DIR}/include)
+
+# The demo application
+add_executable(
+  ${DEMO_APP}
+  ${PROJECT_SOURCE_DIR}/demo/src/main.cc
+  ${PROJECT_SOURCE_DIR}/demo/src/window.cc
+  ${PROJECT_SOURCE_DIR}/demo/src/imgui_manager.cc)
+
+target_include_directories(${DEMO_APP} PUBLIC ${PROJECT_SOURCE_DIR}/deps)
+target_include_directories(${DEMO_APP} PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
 set(GLFW_INSTALL
   OFF
@@ -57,27 +65,21 @@ set(GLFW_DOCUMENT_INTERNALS
   OFF
   CACHE BOOL "" FORCE)
 
-target_include_directories(${TARGET_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/deps)
-target_include_directories(${TARGET_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
-
-target_include_directories(${RENDERER_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/deps)
-target_include_directories(${RENDERER_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
-
 add_subdirectory(${PROJECT_SOURCE_DIR}/deps/glm)
 add_subdirectory(${PROJECT_SOURCE_DIR}/deps/glad)
 add_subdirectory(${PROJECT_SOURCE_DIR}/deps/glfw)
 add_subdirectory(${PROJECT_SOURCE_DIR}/deps/imgui)
 add_subdirectory(${PROJECT_SOURCE_DIR}/deps/implot)
 
-target_link_libraries(${RENDERER_NAME} glm)
-target_link_libraries(${RENDERER_NAME} glad)
+target_link_libraries(${KONTOMIRE_RENDERER} glm)
+target_link_libraries(${KONTOMIRE_RENDERER} glad)
 
-target_link_libraries(${TARGET_NAME} glm)
-target_link_libraries(${TARGET_NAME} glad)
-target_link_libraries(${TARGET_NAME} glfw)
-target_link_libraries(${TARGET_NAME} imgui)
-target_link_libraries(${TARGET_NAME} implot)
-target_link_libraries(${TARGET_NAME} ${RENDERER_NAME})
+target_link_libraries(${DEMO_APP} glm)
+target_link_libraries(${DEMO_APP} glad)
+target_link_libraries(${DEMO_APP} glfw)
+target_link_libraries(${DEMO_APP} imgui)
+target_link_libraries(${DEMO_APP} implot)
+target_link_libraries(${DEMO_APP} ${KONTOMIRE_RENDERER})
 
 # ####################################################
 # ####################################################

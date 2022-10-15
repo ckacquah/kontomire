@@ -13,7 +13,7 @@
 #include <imgui/backends/imgui_impl_glfw.h>
 #include <imgui/backends/imgui_impl_opengl3.h>
 
-#include "kontomire/core/imgui_manager.h"
+#include "imgui_manager.h"
 
 ImguiWindowManager::ImguiWindowManager(const std::string& glsl_version_str)
     : glsl_version(glsl_version_str)
@@ -31,13 +31,13 @@ ImguiWindowManager::~ImguiWindowManager()
     ImGui::DestroyContext();
 }
 
-void ImguiWindowManager::set_size(int width, int height) noexcept
+void ImguiWindowManager::set_size(int width, int height)
 {
     _width = width;
     _height = height;
 };
 
-void ImguiWindowManager::init(GLFWwindow* window) noexcept
+void ImguiWindowManager::init(GLFWwindow* window)
 {
     window_ptr = window;
     ImGuiIO& io = ImGui::GetIO();
@@ -61,7 +61,7 @@ void ImguiWindowManager::init(GLFWwindow* window) noexcept
     ImGui_ImplGlfw_InitForOpenGL(window_ptr, true);
 }
 
-void ImguiWindowManager::render(const std::function<void(void)>& callback) const noexcept
+void ImguiWindowManager::render(const std::function<void(void)>& callback) const
 {
     // Start the Dear ImGui frame
     ImGui_ImplOpenGL3_NewFrame();

@@ -8,7 +8,7 @@
 
 #include <GLFW/glfw3.h>
 
-#include "kontomire/core/imgui_manager.h"
+#include "imgui_manager.h"
 
 struct WindowSize {
     int width {};
@@ -31,11 +31,11 @@ public:
 
     void init() const;
     void create();
-    bool is_closed() const noexcept;
-    void on_update() noexcept;
-    void set_callback(const std::function<void(void)>& callback) noexcept;
+    bool is_closed() const;
+    void on_update();
+    void set_callback(const std::function<void(void)>& callback);
 
-    const WindowSize& get_size() noexcept;
+    const WindowSize& get_size();
 };
 
 #endif // __OPENGL_CPP_TEMPLATE_WINDOWS__

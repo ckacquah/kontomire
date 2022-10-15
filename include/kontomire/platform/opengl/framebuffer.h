@@ -1,7 +1,7 @@
 #ifndef __OPENGL_CPP_TEMPLATE_OPENGL_FRAMEBUFFER__
 #define __OPENGL_CPP_TEMPLATE_OPENGL_FRAMEBUFFER__
 
-#include "kontomire/renderer/framebuffer.h"
+#include "kontomire/core/framebuffer.h"
 
 namespace Kontomire {
 

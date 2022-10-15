@@ -1,6 +1,6 @@
 #include <glm/glm.hpp>
 
-#include "kontomire/renderer/renderer2d.h"
+#include "kontomire/core/renderer2d.h"
 
 namespace Kontomire {
 

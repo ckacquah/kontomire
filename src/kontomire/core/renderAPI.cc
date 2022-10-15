@@ -1,4 +1,4 @@
-#include "kontomire/renderer/renderAPI.h"
+#include "kontomire/core/renderAPI.h"
 #include "kontomire/platform/opengl/renderAPI.h"
 
 #include <functional>
@@ -6,7 +6,7 @@
 
 namespace Kontomire {
 
-std::shared_ptr<RenderAPI> RenderAPI::create() noexcept
+std::shared_ptr<RenderAPI> RenderAPI::create()
 {
     switch (_api) {
     case RenderAPI::API::None:

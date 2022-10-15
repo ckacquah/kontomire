@@ -6,7 +6,7 @@
 #include <imgui/imgui.h>
 #include <implot/implot.h>
 
-#include "kontomire/core/layer.h"
+#include "layer.h"
 
 std::vector<int> bar_data { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 

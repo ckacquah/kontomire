@@ -4,10 +4,10 @@
 #include <memory>
 #include <vector>
 
-#include "kontomire/core/layer.h"
-#include "kontomire/core/layers/opengl.h"
-#include "kontomire/core/layers/test.h"
-#include "kontomire/core/window.h"
+#include "layers/layer.h"
+#include "layers/opengl.h"
+#include "layers/test.h"
+#include "window.h"
 
 class Application {
 private:
@@ -21,10 +21,10 @@ public:
 };
 
 Application::Application()
-    : window(std::make_unique<Window>("OpenGL CPP Template"))
+    : window(std::make_unique<Window>("Kontomire Demo"))
 {
-    layers.push_back(std::unique_ptr<Layer>(new TestLayer1()));
-    layers.push_back(std::unique_ptr<Layer>(new OpenGL_Layer()));
+    layers.push_back(std::make_unique<TestLayer1>());
+    layers.push_back(std::make_unique<OpenGL_Layer>());
     window->create();
 
     for (const auto& layer : layers)

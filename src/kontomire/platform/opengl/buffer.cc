@@ -20,12 +20,12 @@ OpenGLVertexBuffer::~OpenGLVertexBuffer()
     glDeleteBuffers(1, &_id);
 }
 
-void OpenGLVertexBuffer::bind() const noexcept
+void OpenGLVertexBuffer::bind() const
 {
     glBindBuffer(GL_ARRAY_BUFFER, _id);
 }
 
-void OpenGLVertexBuffer::unbind() const noexcept
+void OpenGLVertexBuffer::unbind() const
 {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
@@ -50,13 +50,13 @@ OpenGLIndexBuffer::~OpenGLIndexBuffer()
     glDeleteBuffers(1, &_id);
 }
 
-void OpenGLIndexBuffer::bind() const noexcept
+void OpenGLIndexBuffer::bind() const
 {
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _id);
 }
 
-void OpenGLIndexBuffer::unbind() const noexcept
+void OpenGLIndexBuffer::unbind() const
 {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }

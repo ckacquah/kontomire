@@ -16,8 +16,8 @@
 #include <imgui/backends/imgui_impl_glfw.h>
 #include <imgui/backends/imgui_impl_opengl3.h>
 
-#include "kontomire/core/imgui_manager.h"
-#include "kontomire/core/window.h"
+#include "imgui_manager.h"
+#include "window.h"
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -68,7 +68,7 @@ Window::~Window()
     glfwTerminate();
 }
 
-bool Window::is_closed() const noexcept
+bool Window::is_closed() const
 {
     return glfwWindowShouldClose(window);
 }
@@ -88,7 +88,7 @@ void Window::create()
     imgui_window_manager->init(window);
 }
 
-void Window::on_update() noexcept
+void Window::on_update()
 {
     glfwPollEvents();
     imgui_window_manager->set_size(size.width, size.height);
@@ -98,13 +98,13 @@ void Window::on_update() noexcept
     glfwSwapBuffers(window);
 }
 
-const WindowSize& Window::get_size() noexcept
+const WindowSize& Window::get_size()
 {
     glfwGetFramebufferSize(window, &size.width, &size.height); // update size of window
     return size;
 };
 
-void Window::set_callback(const std::function<void(void)>& callback) noexcept
+void Window::set_callback(const std::function<void(void)>& callback)
 {
     on_update_callback = callback;
 }

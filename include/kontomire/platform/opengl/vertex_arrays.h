@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "kontomire/renderer/vertex_arrays.h"
+#include "kontomire/core/vertex_arrays.h"
 
 namespace Kontomire {
 
@@ -18,14 +18,14 @@ public:
     OpenGLVertexArray();
     ~OpenGLVertexArray();
 
-    // virtual const VertexBuffer& get_vertex_buffer() const noexcept override;
-    virtual void add_vertex_buffer(const std::shared_ptr<VertexBuffer>& buffer) noexcept override;
+    // virtual const VertexBuffer& get_vertex_buffer() const override;
+    virtual void add_vertex_buffer(const std::shared_ptr<VertexBuffer>& buffer) override;
 
-    virtual void set_index_buffer(const std::shared_ptr<IndexBuffer>& buffer) noexcept override;
-    virtual const std::shared_ptr<IndexBuffer>& get_index_buffer() const noexcept override;
+    virtual void set_index_buffer(const std::shared_ptr<IndexBuffer>& buffer) override;
+    virtual const std::shared_ptr<IndexBuffer>& get_index_buffer() const override;
 
-    virtual void bind() const noexcept override;
-    virtual void unbind() const noexcept override;
+    virtual void bind() const override;
+    virtual void unbind() const override;
 };
 
 } // namespace Kontomire

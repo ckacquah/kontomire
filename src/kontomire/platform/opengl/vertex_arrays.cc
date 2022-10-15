@@ -5,7 +5,7 @@
 
 namespace Kontomire {
 
-static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
+static GLenum convert_to_opengl_base_type(ShaderDataType type)
 {
     switch (type) {
     case ShaderDataType::Float:
@@ -45,17 +45,17 @@ OpenGLVertexArray::~OpenGLVertexArray()
     glDeleteVertexArrays(1, &_id);
 }
 
-void OpenGLVertexArray::bind() const noexcept
+void OpenGLVertexArray::bind() const
 {
     glBindVertexArray(_id);
 }
 
-void OpenGLVertexArray::unbind() const noexcept
+void OpenGLVertexArray::unbind() const
 {
     glBindVertexArray(0);
 }
 
-void OpenGLVertexArray::add_vertex_buffer(const std::shared_ptr<VertexBuffer>& buffer) noexcept
+void OpenGLVertexArray::add_vertex_buffer(const std::shared_ptr<VertexBuffer>& buffer)
 {
     glBindVertexArray(_id);
     buffer->bind();
@@ -69,8 +69,8 @@ void OpenGLVertexArray::add_vertex_buffer(const std::shared_ptr<VertexBuffer>& b
         case ShaderDataType::Float4: {
             glEnableVertexAttribArray(_vertex_buffer_index);
             glVertexAttribPointer(_vertex_buffer_index,
-                element.GetComponentCount(),
-                ShaderDataTypeToOpenGLBaseType(element.type),
+                element.get_component_count(),
+                convert_to_opengl_base_type(element.type),
                 element.normalized ? GL_TRUE : GL_FALSE,
                 layout.get_stride(),
                 (const void*)element.offset);
@@ -84,8 +84,8 @@ void OpenGLVertexArray::add_vertex_buffer(const std::shared_ptr<VertexBuffer>& b
         case ShaderDataType::Bool: {
             glEnableVertexAttribArray(_vertex_buffer_index);
             glVertexAttribIPointer(_vertex_buffer_index,
-                element.GetComponentCount(),
-                ShaderDataTypeToOpenGLBaseType(element.type),
+                element.get_component_count(),
+                convert_to_opengl_base_type(element.type),
                 layout.get_stride(),
                 (const void*)element.offset);
             _vertex_buffer_index++;
@@ -93,12 +93,12 @@ void OpenGLVertexArray::add_vertex_buffer(const std::shared_ptr<VertexBuffer>& b
         }
         case ShaderDataType::Mat3:
         case ShaderDataType::Mat4: {
-            uint8_t count = element.GetComponentCount();
+            uint8_t count = element.get_component_count();
             for (uint8_t i = 0; i < count; i++) {
                 glEnableVertexAttribArray(_vertex_buffer_index);
                 glVertexAttribPointer(_vertex_buffer_index,
                     count,
-                    ShaderDataTypeToOpenGLBaseType(element.type),
+                    convert_to_opengl_base_type(element.type),
                     element.normalized ? GL_TRUE : GL_FALSE,
                     layout.get_stride(),
                     (const void*)(element.offset + sizeof(float) * count * i));
@@ -115,14 +115,14 @@ void OpenGLVertexArray::add_vertex_buffer(const std::shared_ptr<VertexBuffer>& b
     _vertex_buffers.push_back(buffer);
 }
 
-void OpenGLVertexArray::set_index_buffer(const std::shared_ptr<IndexBuffer>& buffer) noexcept
+void OpenGLVertexArray::set_index_buffer(const std::shared_ptr<IndexBuffer>& buffer)
 {
     glBindVertexArray(_id);
     buffer->bind();
     _index_buffer = buffer;
 }
 
-const std::shared_ptr<IndexBuffer>& OpenGLVertexArray::get_index_buffer() const noexcept
+const std::shared_ptr<IndexBuffer>& OpenGLVertexArray::get_index_buffer() const
 {
     return _index_buffer;
 }

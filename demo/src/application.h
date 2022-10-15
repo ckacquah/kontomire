@@ -4,9 +4,9 @@
 #include <memory>
 #include <vector>
 
-#include "layers/layer.h"
-#include "layers/opengl.h"
-#include "layers/test.h"
+#include "layer/layer.h"
+#include "layer/opengl.h"
+#include "layer/test.h"
 #include "window.h"
 
 class Application {

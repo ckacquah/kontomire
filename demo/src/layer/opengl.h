@@ -12,7 +12,7 @@
 #include "kontomire/core/framebuffer.h"
 #include "kontomire/core/renderAPI.h"
 #include "kontomire/core/vertex_arrays.h"
-#include "layers/layer.h"
+#include "layer.h"
 
 const char* vertexShaderSource = "#version 330 core\n"
                                  "layout (location = 0) in vec3 aPos;\n"

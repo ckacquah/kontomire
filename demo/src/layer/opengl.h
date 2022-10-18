@@ -36,16 +36,19 @@ const std::string fragment_shader_src = "#version 330 core\n"
 uint32_t indices[6] = {0, 1, 2, 2, 3, 0};
 
 float vertices[3 * 4] = {-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.5f, 0.5f, 0.0f, -0.5f, 0.5f, 0.0f};
-class OpenGL_Layer : public Layer
+class OpenGLLayer : public Layer
 {
   private:
+    glm::vec4 square_color = glm::vec4(0.0f, 0.0f, 1.0f, 1.0f);
+    glm::vec4 background_color = glm::vec4(0.15f, 0.15f, 0.15f, 1.0f);
+
     std::shared_ptr<Kontomire::Shader> shader{};
     std::shared_ptr<Kontomire::RenderAPI> api{};
     std::shared_ptr<Kontomire::FrameBuffer> framebuffer{};
     std::shared_ptr<Kontomire::VertexArray> vertex_array{};
 
   public:
-    void init() noexcept override
+    void init() override
     {
         api = Kontomire::RenderAPI::create();
         shader = Kontomire::Shader::create("basic", vertex_shader_src, fragment_shader_src);
@@ -69,22 +72,28 @@ class OpenGL_Layer : public Layer
         framebuffer = Kontomire::FrameBuffer::create(framebuffer_specs);
     };
 
-    void update() const noexcept override
+    void draw() const
     {
-
         framebuffer->bind();
 
-        api->set_clear_color(glm::vec4(0.2f, 0.2f, 0.2f, 1.0f));
+        api->set_clear_color(background_color);
         api->clear();
 
         shader->bind();
-        shader->set_float4("vColor", glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
+        shader->set_float4("vColor", square_color);
 
         api->draw_indexed(vertex_array);
 
         framebuffer->clear_attachment(1, -1);
+        framebuffer->unbind();
+    }
+
+    void update() const override
+    {
+        draw();
 
         uint32_t texture = framebuffer->get_color_attachment_id();
+
         ImGui::Begin("Kontomire");
         {
             ImGui::BeginChild("Viewport");
@@ -93,7 +102,48 @@ class OpenGL_Layer : public Layer
         }
         ImGui::End();
 
-        framebuffer->unbind();
+        static bool alpha = true;
+        static bool alpha_bar = true;
+        static bool side_preview = true;
+        static bool ref_color = false;
+        static ImVec4 ref_color_v(1.0f, 0.0f, 1.0f, 0.5f);
+        static int display_mode = 0;
+        static int picker_mode = 0;
+        ImGui::Checkbox("With Alpha", &alpha);
+        ImGui::Checkbox("With Alpha Bar", &alpha_bar);
+        ImGui::Checkbox("With Side Preview", &side_preview);
+
+        ImGuiColorEditFlags flags{};
+        if (!alpha)
+            flags |=
+                ImGuiColorEditFlags_NoAlpha; // This is by default if you call ColorPicker3() instead of ColorPicker4()
+        if (alpha_bar)
+            flags |= ImGuiColorEditFlags_AlphaBar;
+        if (!side_preview)
+            flags |= ImGuiColorEditFlags_NoSidePreview;
+        if (picker_mode == 1)
+            flags |= ImGuiColorEditFlags_PickerHueBar;
+        if (picker_mode == 2)
+            flags |= ImGuiColorEditFlags_PickerHueWheel;
+        if (display_mode == 1)
+            flags |= ImGuiColorEditFlags_NoInputs; // Disable all RGB/HSV/Hex displays
+        if (display_mode == 2)
+            flags |= ImGuiColorEditFlags_DisplayRGB; // Override display mode
+        if (display_mode == 3)
+            flags |= ImGuiColorEditFlags_DisplayHSV;
+        if (display_mode == 4)
+            flags |= ImGuiColorEditFlags_DisplayHex;
+
+        ImGui::Begin("Color Panel");
+        {
+            ImGui::Text("Color picker:");
+            ImGui::BeginGroup();
+            ImGui::ColorPicker4("Square Color", (float*)&square_color);
+            ImGui::ColorPicker4("Background Color", (float*)&background_color,
+                                flags | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoSmallPreview);
+            ImGui::EndGroup();
+        }
+        ImGui::End();
     }
 };
 

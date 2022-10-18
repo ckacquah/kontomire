@@ -34,7 +34,7 @@ class Window
     void init() const;
     void create();
     bool is_closed() const;
-    void on_update();
+    void update();
     void set_callback(const std::function<void(void)>& callback);
 
     const WindowSize& get_size();

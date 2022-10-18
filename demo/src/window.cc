@@ -91,7 +91,7 @@ void Window::create()
     imgui_window_manager->init(window);
 }
 
-void Window::on_update()
+void Window::update()
 {
     glfwPollEvents();
     imgui_window_manager->set_size(size.width, size.height);

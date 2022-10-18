@@ -51,9 +51,16 @@ class OpenGLLayer : public Layer
     void init() override
     {
         api = Kontomire::RenderAPI::create();
+        vertex_array = Kontomire::VertexArray::create();
         shader = Kontomire::Shader::create("basic", vertex_shader_src, fragment_shader_src);
 
-        vertex_array = Kontomire::VertexArray::create();
+        Kontomire::FramebufferSpecification framebuffer_specs;
+        framebuffer_specs.attachments = {Kontomire::FramebufferTextureFormat::Depth,
+                                         Kontomire::FramebufferTextureFormat::RGBA8,
+                                         Kontomire::FramebufferTextureFormat::RED_INTEGER};
+        framebuffer_specs.width = 1280;
+        framebuffer_specs.height = 720;
+        framebuffer = Kontomire::FrameBuffer::create(framebuffer_specs);
 
         auto vertex_buffer = Kontomire::VertexBuffer::create(vertices, sizeof(vertices));
         Kontomire::BufferLayout layout = {{Kontomire::ShaderDataType::Float3, "aPos"}};
@@ -62,14 +69,6 @@ class OpenGLLayer : public Layer
 
         auto index_buffer = Kontomire::IndexBuffer::create(indices, sizeof(indices) / sizeof(uint32_t));
         vertex_array->set_index_buffer(index_buffer);
-
-        Kontomire::FramebufferSpecification framebuffer_specs;
-        framebuffer_specs.attachments = {Kontomire::FramebufferTextureFormat::RGBA8,
-                                         Kontomire::FramebufferTextureFormat::RED_INTEGER,
-                                         Kontomire::FramebufferTextureFormat::Depth};
-        framebuffer_specs.width = 1280;
-        framebuffer_specs.height = 720;
-        framebuffer = Kontomire::FrameBuffer::create(framebuffer_specs);
     };
 
     void draw() const
@@ -102,46 +101,13 @@ class OpenGLLayer : public Layer
         }
         ImGui::End();
 
-        static bool alpha = true;
-        static bool alpha_bar = true;
-        static bool side_preview = true;
-        static bool ref_color = false;
-        static ImVec4 ref_color_v(1.0f, 0.0f, 1.0f, 0.5f);
-        static int display_mode = 0;
-        static int picker_mode = 0;
-        ImGui::Checkbox("With Alpha", &alpha);
-        ImGui::Checkbox("With Alpha Bar", &alpha_bar);
-        ImGui::Checkbox("With Side Preview", &side_preview);
-
-        ImGuiColorEditFlags flags{};
-        if (!alpha)
-            flags |=
-                ImGuiColorEditFlags_NoAlpha; // This is by default if you call ColorPicker3() instead of ColorPicker4()
-        if (alpha_bar)
-            flags |= ImGuiColorEditFlags_AlphaBar;
-        if (!side_preview)
-            flags |= ImGuiColorEditFlags_NoSidePreview;
-        if (picker_mode == 1)
-            flags |= ImGuiColorEditFlags_PickerHueBar;
-        if (picker_mode == 2)
-            flags |= ImGuiColorEditFlags_PickerHueWheel;
-        if (display_mode == 1)
-            flags |= ImGuiColorEditFlags_NoInputs; // Disable all RGB/HSV/Hex displays
-        if (display_mode == 2)
-            flags |= ImGuiColorEditFlags_DisplayRGB; // Override display mode
-        if (display_mode == 3)
-            flags |= ImGuiColorEditFlags_DisplayHSV;
-        if (display_mode == 4)
-            flags |= ImGuiColorEditFlags_DisplayHex;
-
         ImGui::Begin("Color Panel");
         {
             ImGui::Text("Color picker:");
-            ImGui::BeginGroup();
-            ImGui::ColorPicker4("Square Color", (float*)&square_color);
-            ImGui::ColorPicker4("Background Color", (float*)&background_color,
-                                flags | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoSmallPreview);
-            ImGui::EndGroup();
+            ImGui::Columns(2);
+            ImGui::ColorPicker4("Square Color", (float*)&square_color, ImGuiColorEditFlags_DefaultOptions_);
+            ImGui::NextColumn();
+            ImGui::ColorPicker4("Background Color", (float*)&background_color, ImGuiColorEditFlags_DefaultOptions_);
         }
         ImGui::End();
     }

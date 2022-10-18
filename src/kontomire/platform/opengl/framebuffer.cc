@@ -15,9 +15,9 @@ static GLenum texture_target(bool multisampled)
     return multisampled ? GL_TEXTURE_2D_MULTISAMPLE : GL_TEXTURE_2D;
 }
 
-static void create_texture(bool multisampled, uint32_t* outid_, uint32_t count)
+static void create_texture(bool multisampled, uint32_t* out_id, uint32_t count)
 {
-    glCreateTextures(texture_target(multisampled), count, outid_);
+    glCreateTextures(texture_target(multisampled), count, out_id);
 }
 
 static void bind_texture(bool multisampled, uint32_t id)

@@ -21,7 +21,7 @@ class Application
     void run();
 };
 
-Application::Application() : window(std::make_unique<Window>("Kontomire Demo"))
+Application::Application() : window(std::make_unique<Window>("Kontomire Playground"))
 {
     layers.push_back(std::make_unique<TestLayer>());
     layers.push_back(std::make_unique<OpenGLLayer>());
@@ -29,11 +29,15 @@ Application::Application() : window(std::make_unique<Window>("Kontomire Demo"))
     window->create();
 
     for (const auto& layer : layers)
+    {
         layer->init();
+    }
 
     window->set_callback([&]() {
         for (const auto& layer : layers)
+        {
             layer->update();
+        }
     });
 }
 

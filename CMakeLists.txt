@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-set(DEMO_APP "kontomire-demo")
+set(KONTOMIRE_PLAYGROUND "kontomire-playground")
 set(KONTOMIRE_RENDERER "kontomire")
 
 project(${KONTOMIRE_RENDERER} VERSION 1.0)
@@ -26,7 +26,7 @@ if(MSVC)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
 endif()
 
-message(STATUS "Started CMake for ${DEMO_APP} v${PROJECT_VERSION}...\n")
+message(STATUS "Started CMake for ${KONTOMIRE_PLAYGROUND} v${PROJECT_VERSION}...\n")
 
 # Project target
 add_library(${KONTOMIRE_RENDERER}
@@ -48,13 +48,13 @@ target_include_directories(${KONTOMIRE_RENDERER} PUBLIC ${PROJECT_SOURCE_DIR}/in
 
 # The demo application
 add_executable(
-  ${DEMO_APP}
-  ${PROJECT_SOURCE_DIR}/demo/src/main.cc
-  ${PROJECT_SOURCE_DIR}/demo/src/window.cc
-  ${PROJECT_SOURCE_DIR}/demo/src/imgui_manager.cc)
+  ${KONTOMIRE_PLAYGROUND}
+  ${PROJECT_SOURCE_DIR}/playground/src/main.cc
+  ${PROJECT_SOURCE_DIR}/playground/src/window.cc
+  ${PROJECT_SOURCE_DIR}/playground/src/imgui_manager.cc)
 
-target_include_directories(${DEMO_APP} PUBLIC ${PROJECT_SOURCE_DIR}/deps)
-target_include_directories(${DEMO_APP} PUBLIC ${PROJECT_SOURCE_DIR}/include)
+target_include_directories(${KONTOMIRE_PLAYGROUND} PUBLIC ${PROJECT_SOURCE_DIR}/deps)
+target_include_directories(${KONTOMIRE_PLAYGROUND} PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
 set(GLFW_INSTALL
   OFF
@@ -84,12 +84,12 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/deps/implot)
 target_link_libraries(${KONTOMIRE_RENDERER} glm)
 target_link_libraries(${KONTOMIRE_RENDERER} glad)
 
-target_link_libraries(${DEMO_APP} glm)
-target_link_libraries(${DEMO_APP} glad)
-target_link_libraries(${DEMO_APP} glfw)
-target_link_libraries(${DEMO_APP} imgui)
-target_link_libraries(${DEMO_APP} implot)
-target_link_libraries(${DEMO_APP} ${KONTOMIRE_RENDERER})
+target_link_libraries(${KONTOMIRE_PLAYGROUND} glm)
+target_link_libraries(${KONTOMIRE_PLAYGROUND} glad)
+target_link_libraries(${KONTOMIRE_PLAYGROUND} glfw)
+target_link_libraries(${KONTOMIRE_PLAYGROUND} imgui)
+target_link_libraries(${KONTOMIRE_PLAYGROUND} implot)
+target_link_libraries(${KONTOMIRE_PLAYGROUND} ${KONTOMIRE_RENDERER})
 
 # ####################################################
 # ####################################################

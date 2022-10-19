@@ -49,9 +49,10 @@ target_include_directories(${KONTOMIRE_RENDERER} PUBLIC ${PROJECT_SOURCE_DIR}/in
 # The demo application
 add_executable(
   ${KONTOMIRE_PLAYGROUND}
-  ${PROJECT_SOURCE_DIR}/playground/src/main.cc
-  ${PROJECT_SOURCE_DIR}/playground/src/window.cc
-  ${PROJECT_SOURCE_DIR}/playground/src/imgui_manager.cc)
+  ${PROJECT_SOURCE_DIR}/src/playground/main.cc
+  ${PROJECT_SOURCE_DIR}/src/playground/window.cc
+  ${PROJECT_SOURCE_DIR}/src/playground/application.cc
+  ${PROJECT_SOURCE_DIR}/src/playground/imgui_manager.cc)
 
 target_include_directories(${KONTOMIRE_PLAYGROUND} PUBLIC ${PROJECT_SOURCE_DIR}/deps)
 target_include_directories(${KONTOMIRE_PLAYGROUND} PUBLIC ${PROJECT_SOURCE_DIR}/include)

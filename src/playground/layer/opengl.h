@@ -15,27 +15,23 @@
 #include "kontomire/core/vertex_arrays.h"
 #include "layer.h"
 
-const std::string vertex_shader_src = "#version 330 core\n"
-                                      "layout (location = 0) in vec3 aPos;\n"
-                                      "out vec3 vPos;\n"
-                                      "void main()\n"
-                                      "{\n"
-                                      "   vPos = aPos;\n"
-                                      "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-                                      "}\0";
+const static std::string vertex_shader_src = "#version 330 core\n"
+                                             "layout (location = 0) in vec3 aPos;\n"
+                                             "out vec3 vPos;\n"
+                                             "void main()\n"
+                                             "{\n"
+                                             "   vPos = aPos;\n"
+                                             "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+                                             "}\0";
 
-const std::string fragment_shader_src = "#version 330 core\n"
-                                        "layout(location = 0) out vec4 color;\n"
-                                        "uniform vec4 vColor;\n"
-                                        "in vec3 vPos;\n"
-                                        "void main()\n"
-                                        "{\n"
-                                        "   color = vec4(vColor.x, vColor.y, vColor.z, 1.0f);\n"
-                                        "}\0";
-
-uint32_t indices[6] = {0, 1, 2, 2, 3, 0};
-
-float vertices[3 * 4] = {-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.5f, 0.5f, 0.0f, -0.5f, 0.5f, 0.0f};
+const static std::string fragment_shader_src = "#version 330 core\n"
+                                               "layout(location = 0) out vec4 color;\n"
+                                               "uniform vec4 vColor;\n"
+                                               "in vec3 vPos;\n"
+                                               "void main()\n"
+                                               "{\n"
+                                               "   color = vec4(vColor.x, vColor.y, vColor.z, 1.0f);\n"
+                                               "}\0";
 class OpenGLLayer : public Layer
 {
   private:
@@ -46,6 +42,9 @@ class OpenGLLayer : public Layer
     std::shared_ptr<Kontomire::RenderAPI> api{};
     std::shared_ptr<Kontomire::FrameBuffer> framebuffer{};
     std::shared_ptr<Kontomire::VertexArray> vertex_array{};
+
+    uint32_t indices[6] = {0, 1, 2, 2, 3, 0};
+    float vertices[3 * 4] = {-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.5f, 0.5f, 0.0f, -0.5f, 0.5f, 0.0f};
 
   public:
     void init() override

@@ -8,14 +8,15 @@
 
 #include "layer.h"
 
-std::vector<int> bar_data{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-
 class TestLayer : public Layer
 {
+  private:
+    std::vector<int> bar_data{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+
   public:
     void update() const override
     {
-        ImGui::Begin("Testing 1 Layer");
+        ImGui::Begin("Implot Test");
         if (ImPlot::BeginPlot("My Plot"))
         {
             ImPlot::PlotBars("My Bar Plot", bar_data.data(), 11);

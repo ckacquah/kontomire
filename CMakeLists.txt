@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
-set(KONTOMIRE_PLAYGROUND "kontomire-playground")
 set(KONTOMIRE_RENDERER "kontomire")
+set(KONTOMIRE_PLAYGROUND "kontomire-playground")
 
 project(${KONTOMIRE_RENDERER} VERSION 1.0)
 
@@ -29,21 +29,25 @@ endif()
 message(STATUS "Started CMake for ${KONTOMIRE_PLAYGROUND} v${PROJECT_VERSION}...\n")
 
 # Project target
-add_library(${KONTOMIRE_RENDERER}
+add_library(
+  ${KONTOMIRE_RENDERER}
   ${PROJECT_SOURCE_DIR}/src/kontomire/core/buffer.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/core/shader.cc
+  ${PROJECT_SOURCE_DIR}/src/kontomire/core/texture.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/core/renderAPI.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/core/renderer2d.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/core/framebuffer.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/core/vertex_arrays.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/platform/opengl/buffer.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/platform/opengl/shader.cc
+  ${PROJECT_SOURCE_DIR}/src/kontomire/platform/opengl/texture.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/platform/opengl/renderAPI.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/platform/opengl/framebuffer.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/platform/opengl/vertex_arrays.cc
 )
 
 target_include_directories(${KONTOMIRE_RENDERER} PUBLIC ${PROJECT_SOURCE_DIR}/deps)
+target_include_directories(${KONTOMIRE_RENDERER} PUBLIC ${PROJECT_SOURCE_DIR}/deps/stb)
 target_include_directories(${KONTOMIRE_RENDERER} PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
 # The demo application
@@ -52,10 +56,14 @@ add_executable(
   ${PROJECT_SOURCE_DIR}/src/playground/main.cc
   ${PROJECT_SOURCE_DIR}/src/playground/window.cc
   ${PROJECT_SOURCE_DIR}/src/playground/application.cc
-  ${PROJECT_SOURCE_DIR}/src/playground/imgui_manager.cc)
+  ${PROJECT_SOURCE_DIR}/src/playground/imgui_manager.cc
+)
 
 target_include_directories(${KONTOMIRE_PLAYGROUND} PUBLIC ${PROJECT_SOURCE_DIR}/deps)
 target_include_directories(${KONTOMIRE_PLAYGROUND} PUBLIC ${PROJECT_SOURCE_DIR}/include)
+
+configure_file(${PROJECT_SOURCE_DIR}/assets/Sword.png assets/sword.png COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/assets/texture.jpg assets/texture.jpg COPYONLY)
 
 set(GLFW_INSTALL
   OFF

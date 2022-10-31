@@ -1,10 +1,9 @@
 #ifndef __KONTOMIRE_RENDERER_BUFFER__
 #define __KONTOMIRE_RENDERER_BUFFER__
 
-#include <stdint.h>
-
 #include <functional>
 #include <memory>
+#include <stdint.h>
 
 namespace Kontomire
 {
@@ -24,7 +23,7 @@ enum class ShaderDataType
     Bool
 };
 
-static uint32_t ShaderDataTypeSize(ShaderDataType type)
+static uint32_t convert_shader_data_type_to_size(ShaderDataType type)
 {
     switch (type)
     {
@@ -65,7 +64,7 @@ struct BufferElement
     BufferElement() = default;
 
     BufferElement(ShaderDataType type, const std::string& name, bool normalized = false)
-        : name(name), type(type), size(ShaderDataTypeSize(type)), offset(0), normalized(normalized)
+        : name(name), type(type), size(convert_shader_data_type_to_size(type)), offset(0), normalized(normalized)
     {
     }
 
@@ -125,15 +124,17 @@ class BufferLayout
     {
         return stride_;
     }
+
     const std::vector<BufferElement>& elements() const
     {
         return elements_;
-    };
+    }
 
     std::vector<BufferElement>::const_iterator end() const
     {
         return elements_.end();
     }
+
     std::vector<BufferElement>::const_iterator begin() const
     {
         return elements_.begin();

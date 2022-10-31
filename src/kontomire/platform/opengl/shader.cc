@@ -47,7 +47,7 @@ const std::string& OpenGLShader::name() const
 void OpenGLShader::compile_shaders()
 {
     int success{};
-    char logs[512];
+    char logs[1024];
 
     for (auto&& [shader, shader_src] : shader_src_)
     {

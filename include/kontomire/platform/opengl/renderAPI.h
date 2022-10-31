@@ -8,7 +8,6 @@ namespace Kontomire
 
 class OpenGLRenderAPI : public RenderAPI
 {
-  private:
   public:
     virtual void init() override;
     virtual void clear() override;

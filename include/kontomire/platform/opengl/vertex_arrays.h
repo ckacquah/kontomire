@@ -13,8 +13,9 @@ class OpenGLVertexArray : public VertexArray
   private:
     uint32_t id_{};
     uint32_t vertex_buffer_index_{};
-    std::vector<std::shared_ptr<VertexBuffer>> vertex_buffers_;
+
     std::shared_ptr<IndexBuffer> index_buffer_;
+    std::vector<std::shared_ptr<VertexBuffer>> vertex_buffers_;
 
   public:
     OpenGLVertexArray();

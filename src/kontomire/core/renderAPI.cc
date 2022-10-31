@@ -9,7 +9,7 @@ namespace Kontomire
 
 std::shared_ptr<RenderAPI> RenderAPI::create()
 {
-    switch (_api)
+    switch (RenderAPI::get_API())
     {
     case RenderAPI::API::None:
     case RenderAPI::API::OpenGL:

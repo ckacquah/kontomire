@@ -101,8 +101,7 @@ void Window::update()
 
 const WindowSize& Window::get_size()
 {
-    glfwGetFramebufferSize(window, &size.width,
-                           &size.height); // update size of window
+    glfwGetFramebufferSize(window, &size.width, &size.height); // update size of window
     return size;
 };
 

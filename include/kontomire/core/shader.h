@@ -36,6 +36,9 @@ class Shader
 
 class ShaderLibrary
 {
+  private:
+    std::unordered_map<std::string, std::shared_ptr<Shader>> shaders_;
+
   public:
     void add(const std::shared_ptr<Shader>& shader);
     void add(const std::string& name, const std::shared_ptr<Shader>& shader);
@@ -43,9 +46,6 @@ class ShaderLibrary
     std::shared_ptr<Shader> get(const std::string& name);
 
     bool exists(const std::string& name) const;
-
-  private:
-    std::unordered_map<std::string, std::shared_ptr<Shader>> shaders_;
 };
 
 } // namespace Kontomire

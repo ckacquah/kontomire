@@ -15,6 +15,28 @@ namespace Kontomire
 
 class OpenGLShader : public Shader
 {
+  private:
+    uint32_t id_;
+    std::string name_;
+    std::string filepath_;
+
+    std::vector<uint32_t> shaders_ids_;
+    std::unordered_map<uint32_t, std::string> shader_src_;
+
+  private:
+    void create_program();
+    void compile_shaders();
+
+    void upload_uniform_int(const std::string& name, int value);
+    void upload_uniform_int_array(const std::string& name, int* values, uint32_t count);
+
+    void upload_uniform_float(const std::string& name, float value);
+    void upload_uniform_float2(const std::string& name, const glm::vec2& value);
+    void upload_uniform_float3(const std::string& name, const glm::vec3& value);
+    void upload_uniform_float4(const std::string& name, const glm::vec4& value);
+
+    void upload_uniform_mat4(const std::string& name, const glm::mat4& matrix);
+
   public:
     OpenGLShader(const std::string& name, const std::string& vertex_src, const std::string& fragment_src);
     ~OpenGLShader();
@@ -33,28 +55,6 @@ class OpenGLShader : public Shader
     virtual void set_mat4(const std::string& name, const glm::mat4& value) override;
 
     virtual const std::string& name() const override;
-
-  private:
-    void create_program();
-    void compile_shaders();
-
-    void upload_uniform_int(const std::string& name, int value);
-    void upload_uniform_int_array(const std::string& name, int* values, uint32_t count);
-
-    void upload_uniform_float(const std::string& name, float value);
-    void upload_uniform_float2(const std::string& name, const glm::vec2& value);
-    void upload_uniform_float3(const std::string& name, const glm::vec3& value);
-    void upload_uniform_float4(const std::string& name, const glm::vec4& value);
-
-    void upload_uniform_mat4(const std::string& name, const glm::mat4& matrix);
-
-  private:
-    uint32_t id_;
-    std::string name_;
-    std::string filepath_;
-
-    std::vector<uint32_t> shaders_ids_;
-    std::unordered_map<uint32_t, std::string> shader_src_;
 };
 
 } // namespace Kontomire

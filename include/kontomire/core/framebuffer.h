@@ -31,7 +31,6 @@ struct FramebufferTextureSpecification
     }
 
     FramebufferTextureFormat texture_format = FramebufferTextureFormat::None;
-    // TODO: filtering/wrap
 };
 
 struct FramebufferAttachmentSpecification

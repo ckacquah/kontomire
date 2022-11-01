@@ -19,7 +19,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCC)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wall -Wextra -Wconversion")
 endif()
 
 if(MSVC)
@@ -62,8 +62,9 @@ add_executable(
 target_include_directories(${KONTOMIRE_PLAYGROUND} PUBLIC ${PROJECT_SOURCE_DIR}/deps)
 target_include_directories(${KONTOMIRE_PLAYGROUND} PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
-configure_file(${PROJECT_SOURCE_DIR}/assets/Sword.png assets/sword.png COPYONLY)
-configure_file(${PROJECT_SOURCE_DIR}/assets/texture.jpg assets/texture.jpg COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/assets/config/imgui.ini assets/config/desktop.ini COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/assets/textures/Sword.png assets/textures/sword.png COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/assets/textures/texture.jpg assets/textures/texture.jpg COPYONLY)
 
 set(GLFW_INSTALL
   OFF

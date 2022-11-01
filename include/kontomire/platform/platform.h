@@ -1,0 +1,4 @@
+#ifndef __KONTOMIRE_PLATFORM__
+#define __KONTOMIRE_PLATFORM__
+
+#endif // __KONTOMIRE_PLATFORM__

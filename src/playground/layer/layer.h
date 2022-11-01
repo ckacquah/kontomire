@@ -5,8 +5,8 @@ class Layer
 {
   public:
     virtual void init(){};
-    virtual void destroy() const {};
-    virtual void update() const {};
+    virtual void destroy(){};
+    virtual void update(){};
 };
 
 #endif // __KONTOMIRE_LAYER__

@@ -41,6 +41,7 @@ void ImguiWindowManager::init(GLFWwindow* window)
     window_ptr = window;
     ImGuiIO& io = ImGui::GetIO();
     (void)io;
+    io.IniFilename = "assets/config/desktop.ini";
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;

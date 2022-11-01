@@ -3,7 +3,7 @@
 Application::Application() : window(std::make_unique<Window>("Kontomire Playground"))
 {
     layers.push_back(std::make_unique<TestLayer>());
-    layers.push_back(std::make_unique<OpenGLLayer>());
+    layers.push_back(std::make_unique<DemoLayer>());
 
     window->create();
 

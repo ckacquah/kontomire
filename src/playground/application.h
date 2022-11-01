@@ -4,8 +4,8 @@
 #include <memory>
 #include <vector>
 
+#include "layer/demo.h"
 #include "layer/layer.h"
-#include "layer/opengl.h"
 #include "layer/test.h"
 #include "window.h"
 

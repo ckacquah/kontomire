@@ -4,11 +4,8 @@ I'm just playing with opengl. This little experiment is supposed to help me impr
 
 # Screenshots
 
-![Template App Screenshot](assets/screenshot-01.png)
-![Template App Screenshot](assets/screenshot-02.png)
-![Template App Screenshot](assets/screenshot-03.png)
-![Template App Screenshot](assets/screenshot-04.png)
-![Template App Screenshot](assets/screenshot-05.png)
+![Template App Screenshot](.github/screenshots/screenshot-0.png)
+![Template App Screenshot](.github/screenshots/screenshot-1.png)
 
 # How to use
 

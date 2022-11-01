@@ -18,13 +18,12 @@ const static std::string vertex_shader_src = "#version 420 core\n"
                                              "layout (location = 0) in vec3 a_Pos;\n"
                                              "layout (location = 1) in vec2 a_TexCoord;\n"
                                              "out vec2 v_TexCoord;\n"
-                                             "uniform mat4 u_View;\n"
                                              "uniform mat4 u_Model;\n"
-                                             "uniform mat4 u_Projection;\n"
+                                             "uniform mat4 u_ViewProjection;\n"
                                              "void main()\n"
                                              "{\n"
                                              "   v_TexCoord = a_TexCoord;\n"
-                                             "   gl_Position = u_Projection * u_View * u_Model * vec4(a_Pos, 1.0);\n"
+                                             "   gl_Position = u_ViewProjection * u_Model * vec4(a_Pos, 1.0);\n"
                                              "}\n";
 
 const static std::string fragment_shader_src = "#version 420 core\n"
@@ -92,11 +91,12 @@ class DemoLayer : public Layer
         shader->set_int("u_Texture", 0);
 
         model = glm::translate(model, glm::vec3(0.0f, 0.0f, 2.5f));
+        camera.set_aspect_ratio(static_cast<float>(framebuffer_specs.width) /
+                                static_cast<float>(framebuffer_specs.height));
     };
 
     void draw()
     {
-        float aspect_ratio = static_cast<float>(framebuffer_specs.width) / static_cast<float>(framebuffer_specs.height);
         framebuffer->bind();
 
         api->set_clear_color(background_color);
@@ -104,8 +104,7 @@ class DemoLayer : public Layer
 
         shader->bind();
         shader->set_float4("u_Color", square_color);
-        shader->set_mat4("u_View", camera.view());
-        shader->set_mat4("u_Projection", camera.projection(aspect_ratio));
+        shader->set_mat4("u_ViewProjection", camera.view_projection());
         shader->set_mat4("u_Model", model);
 
         texture->bind();

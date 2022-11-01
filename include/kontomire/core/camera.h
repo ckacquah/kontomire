@@ -24,6 +24,8 @@ class Camera
     float zoom_{CameraDefaults::ZOOM};
     float pitch_{CameraDefaults::PITCH};
 
+    float aspect_ratio_{};
+
     glm::vec3 up_{};
     glm::vec3 right_{};
     glm::vec3 front_{};
@@ -61,14 +63,15 @@ class Camera
 
     virtual ~Camera() = default;
 
-    glm::mat4 projection(float aspect_ratio) const
+    glm::mat4 view_projection() const
     {
-        return glm::perspective(glm::radians(zoom_), aspect_ratio, 0.1f, 100.0f);
+        return glm::perspective(glm::radians(zoom_), aspect_ratio_, 0.1f, 100.0f) *
+               glm::lookAt(position_, position_ + front_, up_);
     }
 
-    glm::mat4 view() const
+    void set_aspect_ratio(float ratio)
     {
-        return glm::lookAt(position_, position_ + front_, up_);
+        aspect_ratio_ = ratio;
     }
 
     void zoom(float level)

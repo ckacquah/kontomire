@@ -30,6 +30,7 @@ class Shader
 
     virtual const std::string& name() const = 0;
 
+    static std::shared_ptr<Shader> create(const std::string& path);
     static std::shared_ptr<Shader> create(const std::string& name, const std::string& vertex_src,
                                           const std::string& fragment_src);
 };

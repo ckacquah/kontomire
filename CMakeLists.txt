@@ -35,6 +35,7 @@ add_library(
   ${PROJECT_SOURCE_DIR}/src/kontomire/core/shader.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/core/texture.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/core/renderAPI.cc
+  ${PROJECT_SOURCE_DIR}/src/kontomire/core/renderer.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/core/renderer2d.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/core/framebuffer.cc
   ${PROJECT_SOURCE_DIR}/src/kontomire/core/vertex_arrays.cc
@@ -65,6 +66,12 @@ target_include_directories(${KONTOMIRE_PLAYGROUND} PUBLIC ${PROJECT_SOURCE_DIR}/
 configure_file(${PROJECT_SOURCE_DIR}/assets/config/imgui.ini assets/config/desktop.ini COPYONLY)
 configure_file(${PROJECT_SOURCE_DIR}/assets/textures/Sword.png assets/textures/sword.png COPYONLY)
 configure_file(${PROJECT_SOURCE_DIR}/assets/textures/texture.jpg assets/textures/texture.jpg COPYONLY)
+
+configure_file(${PROJECT_SOURCE_DIR}/assets/shaders/flat-color.glsl assets/shaders/flat-color.glsl COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/assets/shaders/basic-texture.glsl assets/shaders/basic-texture.glsl COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/assets/shaders/render2d/quad.glsl assets/shaders/render2d/quad.glsl COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/assets/shaders/render2d/line.glsl assets/shaders/render2d/line.glsl COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/assets/shaders/render2d/circle.glsl assets/shaders/render2d/circle.glsl COPYONLY)
 
 set(GLFW_INSTALL
   OFF

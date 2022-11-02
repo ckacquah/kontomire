@@ -14,27 +14,6 @@
 #include "kontomire.h"
 #include "layer.h"
 
-const static std::string vertex_shader_src = "#version 420 core\n"
-                                             "layout (location = 0) in vec3 a_Pos;\n"
-                                             "layout (location = 1) in vec2 a_TexCoord;\n"
-                                             "out vec2 v_TexCoord;\n"
-                                             "uniform mat4 u_Model;\n"
-                                             "uniform mat4 u_ViewProjection;\n"
-                                             "void main()\n"
-                                             "{\n"
-                                             "   v_TexCoord = a_TexCoord;\n"
-                                             "   gl_Position = u_ViewProjection * u_Model * vec4(a_Pos, 1.0);\n"
-                                             "}\n";
-
-const static std::string fragment_shader_src = "#version 420 core\n"
-                                               "in vec2 v_TexCoord;\n"
-                                               "out vec4 color;\n"
-                                               "uniform vec4 u_Color;\n"
-                                               "uniform sampler2D u_Texture;\n"
-                                               "void main()\n"
-                                               "{\n"
-                                               "   color = texture(u_Texture, v_TexCoord) * u_Color;\n"
-                                               "}\n";
 class DemoLayer : public Layer
 {
   private:
@@ -45,70 +24,51 @@ class DemoLayer : public Layer
     glm::vec4 square_color = glm::vec4(1.0f, 0.5f, 0.0f, 1.0f);
     glm::vec4 background_color = glm::vec4(0.15f, 0.15f, 0.15f, 1.0f);
 
-    std::shared_ptr<Kontomire::Shader> shader{};
-    std::shared_ptr<Kontomire::RenderAPI> api{};
-    std::shared_ptr<Kontomire::Texture2D> texture{};
+    glm::vec2 square_size = glm::vec2(1.0f, 1.0f);
+    glm::vec3 square_position = glm::vec3(0.0f, 0.0f, 5.0f);
+
+    glm::vec2 circle_size = glm::vec2(0.725f, 0.75f);
+    glm::vec3 circle_position = glm::vec3(-1.0f, 0.0f, 5.0f);
+
+    std::shared_ptr<Kontomire::Texture2D> texture;
     std::shared_ptr<Kontomire::FrameBuffer> framebuffer{};
-    std::shared_ptr<Kontomire::VertexArray> vertex_array{};
 
     Kontomire::Camera camera = Kontomire::Camera();
     Kontomire::FramebufferSpecification framebuffer_specs;
 
-    glm::mat4 model{glm::mat4(1.0f)};
-    uint32_t indices[6] = {0, 1, 2, 2, 3, 0};
-    float vertices[5 * 4] = {-0.75f, -0.75f, 0.0f, 0.0f, 0.0f,  // top
-                             0.75f,  -0.75f, 0.0f, 1.0f, 0.0f,  // left
-                             0.75f,  0.75f,  0.0f, 1.0f, 1.0f,  // right
-                             -0.75f, 0.75f,  0.0f, 0.0f, 1.0f}; // bottom
-
   public:
     void init() override
     {
-        api = Kontomire::RenderAPI::create();
-        shader = Kontomire::Shader::create("basic", vertex_shader_src, fragment_shader_src);
-        texture = Kontomire::Texture2D::create("assets/textures/texture.jpg");
-
         framebuffer_specs.attachments = {Kontomire::FramebufferTextureFormat::Depth,
                                          Kontomire::FramebufferTextureFormat::RGBA8,
                                          Kontomire::FramebufferTextureFormat::RED_INTEGER};
         framebuffer_specs.width = 1280;
         framebuffer_specs.height = 720;
 
+        texture = Kontomire::Texture2D::create("assets/textures/texture.jpg");
+
         framebuffer = Kontomire::FrameBuffer::create(framebuffer_specs);
 
-        Kontomire::BufferLayout layout = {{Kontomire::ShaderDataType::Float3, "a_Pos"},
-                                          {Kontomire::ShaderDataType::Float2, "a_TexCoord"}};
-
-        auto vertex_buffer = Kontomire::VertexBuffer::create(vertices, sizeof(vertices));
-        vertex_buffer->set_layout(layout);
-
-        vertex_array = Kontomire::VertexArray::create();
-        vertex_array->add_vertex_buffer(vertex_buffer);
-
-        auto index_buffer = Kontomire::IndexBuffer::create(indices, sizeof(indices) / sizeof(uint32_t));
-        vertex_array->set_index_buffer(index_buffer);
-        shader->bind();
-        shader->set_int("u_Texture", 0);
-
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 2.5f));
         camera.set_aspect_ratio(static_cast<float>(framebuffer_specs.width) /
                                 static_cast<float>(framebuffer_specs.height));
+
+        Kontomire::Renderer::set_line_width(1.0f);
+
+        Kontomire::Renderer2D::init();
     };
 
     void draw()
     {
         framebuffer->bind();
 
-        api->set_clear_color(background_color);
-        api->clear();
+        Kontomire::Renderer::set_clear_color(background_color);
+        Kontomire::Renderer::clear();
 
-        shader->bind();
-        shader->set_float4("u_Color", square_color);
-        shader->set_mat4("u_ViewProjection", camera.view_projection());
-        shader->set_mat4("u_Model", model);
-
-        texture->bind();
-        api->draw_indexed(vertex_array);
+        Kontomire::Renderer2D::begin(camera);
+        Kontomire::Renderer2D::draw_quad(square_position, square_size, texture, square_color);
+        Kontomire::Renderer2D::draw_line(glm::vec3(1.0f, 0.0f, 5.0f), glm::vec3(0.0f, 1.0f, 5.0f), square_color);
+        Kontomire::Renderer2D::draw_circle(circle_position, circle_size, square_color);
+        Kontomire::Renderer2D::end();
 
         framebuffer->clear_attachment(1, -1);
         framebuffer->unbind();
@@ -137,8 +97,19 @@ class DemoLayer : public Layer
 
             ImGui::Separator();
 
+            ImGui::SliderFloat2("Square size", reinterpret_cast<float*>(&square_size), 0.0f, 1.0f, "%.3f");
+            ImGui::SliderFloat3("Square position", reinterpret_cast<float*>(&square_position), -20.0f, 20.0f, "%.3f");
+
+            ImGui::Separator();
+
+            ImGui::SliderFloat2("Circle size", reinterpret_cast<float*>(&circle_size), 0.0f, 1.0f, "%.3f");
+            ImGui::SliderFloat3("Circle position", reinterpret_cast<float*>(&circle_position), -20.0f, 20.0f, "%.3f");
+
+            ImGui::Separator();
+
             ImGui::SliderFloat("Yaw", &yaw, -180.0f, 180.0f, "Yaw = %.3f");
             ImGui::SliderFloat("Pitch", &pitch, -90.0f, 90.0f, "Pitch = %.3f");
+
             ImGui::Separator();
 
             camera.rotate(yaw, pitch);

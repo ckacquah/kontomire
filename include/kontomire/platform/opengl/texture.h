@@ -37,6 +37,11 @@ class OpenGLTexture2D : public Texture2D
         return id_;
     }
 
+    virtual bool operator==(const Texture& other) const override
+    {
+        return id_ == other.id();
+    }
+
     virtual void set_data(void* data, uint32_t size, uint8_t channels) override;
 
     virtual void bind(uint32_t slot = 0) const override;

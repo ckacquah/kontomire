@@ -29,11 +29,22 @@ void OpenGLRenderAPI::set_viewport(uint32_t x, uint32_t y, uint32_t width, uint3
     glViewport(x, y, width, height);
 }
 
+void OpenGLRenderAPI::draw_lines(const std::shared_ptr<VertexArray>& vertex_array, uint32_t vertex_count)
+{
+    vertex_array->bind();
+    glDrawArrays(GL_LINES, 0, vertex_count);
+}
+
 void OpenGLRenderAPI::draw_indexed(const std::shared_ptr<VertexArray>& vertex_array, uint32_t index_count)
 {
     vertex_array->bind();
     uint32_t count = index_count ? index_count : vertex_array->index_buffer()->count();
     glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
+}
+
+void OpenGLRenderAPI::set_line_width(float width)
+{
+    glLineWidth(width);
 }
 
 } // namespace Kontomire

@@ -18,6 +18,8 @@ class Texture
 
     virtual void set_data(void* data, uint32_t size, uint8_t channels) = 0;
 
+    virtual bool operator==(const Texture& other) const = 0;
+
     virtual void bind(uint32_t slot = 0) const = 0;
 };
 

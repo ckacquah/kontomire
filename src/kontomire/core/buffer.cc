@@ -7,6 +7,18 @@
 namespace Kontomire
 {
 
+std::shared_ptr<VertexBuffer> VertexBuffer::create(uint32_t size)
+{
+    switch (RenderAPI::get_API())
+    {
+    case RenderAPI::API::None:
+        return nullptr;
+    case RenderAPI::API::OpenGL:
+        return std::make_shared<OpenGLVertexBuffer>(size);
+    }
+    return nullptr;
+}
+
 std::shared_ptr<VertexBuffer> VertexBuffer::create(const float* vertices, uint32_t size)
 {
     switch (RenderAPI::get_API())

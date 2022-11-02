@@ -21,7 +21,9 @@ class DemoLayer : public Layer
     float zoom{Kontomire::CameraDefaults::ZOOM};
     float pitch{Kontomire::CameraDefaults::PITCH};
 
-    glm::vec4 square_color = glm::vec4(1.0f, 0.5f, 0.0f, 1.0f);
+    glm::vec4 quad_color = glm::vec4(1.0f, 0.5f, 0.0f, 1.0f);
+    glm::vec4 line_color = glm::vec4(0.2f, 1.0f, 0.0f, 1.0f);
+    glm::vec4 circle_color = glm::vec4(1.0f, 0.0f, 0.5f, 1.0f);
     glm::vec4 background_color = glm::vec4(0.15f, 0.15f, 0.15f, 1.0f);
 
     glm::vec2 square_size = glm::vec2(1.0f, 1.0f);
@@ -65,9 +67,11 @@ class DemoLayer : public Layer
         Kontomire::Renderer::clear();
 
         Kontomire::Renderer2D::begin(camera);
-        Kontomire::Renderer2D::draw_quad(square_position, square_size, texture, square_color);
-        Kontomire::Renderer2D::draw_line(glm::vec3(1.0f, 0.0f, 5.0f), glm::vec3(0.0f, 1.0f, 5.0f), square_color);
-        Kontomire::Renderer2D::draw_circle(circle_position, circle_size, square_color);
+
+        Kontomire::Renderer2D::draw_line(glm::vec3(1.0f, 0.0f, 5.0f), glm::vec3(0.0f, 1.0f, 5.0f), line_color);
+        Kontomire::Renderer2D::draw_quad(square_position, square_size, texture, quad_color);
+        Kontomire::Renderer2D::draw_circle(circle_position, circle_size, circle_color);
+
         Kontomire::Renderer2D::end();
 
         framebuffer->clear_attachment(1, -1);
@@ -92,7 +96,9 @@ class DemoLayer : public Layer
 
         ImGui::Begin("Settings");
         {
-            ImGui::ColorEdit3("Square Color", const_cast<float*>(glm::value_ptr(square_color)));
+            ImGui::ColorEdit3("Quad Color", const_cast<float*>(glm::value_ptr(quad_color)));
+            ImGui::ColorEdit3("Line Color", const_cast<float*>(glm::value_ptr(line_color)));
+            ImGui::ColorEdit3("Circle Color", const_cast<float*>(glm::value_ptr(circle_color)));
             ImGui::ColorEdit3("Background Color", const_cast<float*>(glm::value_ptr(background_color)));
 
             ImGui::Separator();

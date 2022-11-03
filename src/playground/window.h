@@ -24,13 +24,12 @@ class Window
   private:
     static API api_;
 
-  protected:
-    virtual void destroy() = 0;
-
   public:
     virtual ~Window() = default;
 
     virtual void update() = 0;
+    virtual void destroy() = 0;
+
     virtual bool closed() const = 0;
 
     virtual WindowSize size() const = 0;
@@ -51,14 +50,13 @@ class GlfwWindow : public Window
     GLFWwindow* handle_{};
     std::unique_ptr<GraphicsContext> context_{};
 
-  private:
-    virtual void destroy() override;
-
   public:
     GlfwWindow(const std::string& name, uint32_t width, uint32_t height);
     ~GlfwWindow();
 
     virtual void update() override;
+    virtual void destroy() override;
+
     virtual bool closed() const override;
 
     virtual WindowSize size() const override;

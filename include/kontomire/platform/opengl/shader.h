@@ -10,7 +10,7 @@
 
 #include "kontomire/core/shader.h"
 
-namespace Kontomire
+namespace knt
 {
 
 class OpenGLShader : public Shader
@@ -57,6 +57,6 @@ class OpenGLShader : public Shader
     virtual const std::string& name() const override;
 };
 
-} // namespace Kontomire
+} // namespace knt
 
 #endif // __KONTOMIRE_OPENGL_SHADER__

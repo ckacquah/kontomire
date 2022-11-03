@@ -6,7 +6,7 @@
 
 #include "kontomire/core/renderAPI.h"
 
-namespace Kontomire
+namespace knt
 {
 
 class Renderer
@@ -51,6 +51,6 @@ class Renderer
     }
 };
 
-} // namespace Kontomire
+} // namespace knt
 
 #endif // __KONTOMIRE_RENDERER__

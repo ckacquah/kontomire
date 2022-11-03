@@ -3,7 +3,7 @@
 
 #include "kontomire/core/renderAPI.h"
 
-namespace Kontomire
+namespace knt
 {
 
 class OpenGLRenderAPI : public RenderAPI
@@ -18,6 +18,6 @@ class OpenGLRenderAPI : public RenderAPI
     virtual void draw_indexed(const std::shared_ptr<VertexArray>& vertex_array, uint32_t index_count = 0) override;
 };
 
-} // namespace Kontomire
+} // namespace knt
 
 #endif // __KONTOMIRE_OPENGL_RENDER_API__

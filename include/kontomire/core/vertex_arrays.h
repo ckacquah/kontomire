@@ -3,7 +3,7 @@
 
 #include "buffer.h"
 
-namespace Kontomire
+namespace knt
 {
 
 class VertexArray
@@ -20,6 +20,6 @@ class VertexArray
     static std::shared_ptr<VertexArray> create();
 };
 
-} // namespace Kontomire
+} // namespace knt
 
 #endif // __KONTOMIRE_VERTEX_ARRAYS__

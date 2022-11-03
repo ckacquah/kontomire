@@ -2,7 +2,7 @@
 
 #include "kontomire/platform/opengl/framebuffer.h"
 
-namespace Kontomire
+namespace knt
 {
 
 static const uint32_t _MAX_FRAMEBUFFERSIZE = 8192;
@@ -89,14 +89,14 @@ static GLenum texture_format_to_GL(FramebufferTextureFormat format)
 
 } // namespace Utils
 
-OpenGLFramebuffer::OpenGLFramebuffer(const FramebufferSpecification& spec) : specification_(spec)
+OpenGLFramebuffer::OpenGLFramebuffer(const FramebufferSpecification& spec) : spec_(spec)
 {
-    for (auto spec : specification_.attachments.attachments)
+    for (auto spec : spec_.attachments.attachments)
     {
         if (!Utils::is_depth_format(spec.texture_format))
-            color_attachment_specification_.emplace_back(spec);
+            color_attachment_spec_.emplace_back(spec);
         else
-            depth_attachment_specification_ = spec;
+            depth_attachment_spec_ = spec;
     }
 
     invalidate();
@@ -117,33 +117,33 @@ void OpenGLFramebuffer::invalidate()
         glDeleteTextures(color_attachment_.size(), color_attachment_.data());
         glDeleteTextures(1, &depth_attachment_);
 
-        color_attachment_specification_.clear();
+        color_attachment_spec_.clear();
         depth_attachment_ = 0;
     }
 
     glCreateFramebuffers(1, &id_);
     glBindFramebuffer(GL_FRAMEBUFFER, id_);
 
-    bool multisample = specification_.samples > 1;
+    bool multisample = spec_.samples > 1;
 
     // Attachments
-    if (color_attachment_specification_.size())
+    if (color_attachment_spec_.size())
     {
-        color_attachment_.resize(color_attachment_specification_.size());
-        Utils::create_texture(multisample, color_attachment_.data(), color_attachment_specification_.size());
+        color_attachment_.resize(color_attachment_spec_.size());
+        Utils::create_texture(multisample, color_attachment_.data(), color_attachment_spec_.size());
 
-        for (size_t i = 0; i < color_attachment_specification_.size(); i++)
+        for (size_t i = 0; i < color_attachment_spec_.size(); i++)
         {
             Utils::bind_texture(multisample, color_attachment_[i]);
-            switch (color_attachment_specification_[i].texture_format)
+            switch (color_attachment_spec_[i].texture_format)
             {
             case FramebufferTextureFormat::RGBA8:
-                Utils::attach_color_texture(color_attachment_[i], specification_.samples, GL_RGBA8, GL_RGBA,
-                                            specification_.width, specification_.height, i);
+                Utils::attach_color_texture(color_attachment_[i], spec_.samples, GL_RGBA8, GL_RGBA, spec_.width,
+                                            spec_.height, i);
                 break;
             case FramebufferTextureFormat::RED_INTEGER:
-                Utils::attach_color_texture(color_attachment_[i], specification_.samples, GL_R32I, GL_RED_INTEGER,
-                                            specification_.width, specification_.height, i);
+                Utils::attach_color_texture(color_attachment_[i], spec_.samples, GL_R32I, GL_RED_INTEGER, spec_.width,
+                                            spec_.height, i);
                 break;
             default:
                 break;
@@ -151,25 +151,24 @@ void OpenGLFramebuffer::invalidate()
         }
     }
 
-    if (depth_attachment_specification_.texture_format != FramebufferTextureFormat::None)
+    if (depth_attachment_spec_.texture_format != FramebufferTextureFormat::NONE)
     {
         Utils::create_texture(multisample, &depth_attachment_, 1);
         Utils::bind_texture(multisample, depth_attachment_);
-        if (depth_attachment_specification_.texture_format == FramebufferTextureFormat::DEPTH24STENCIL8)
+        if (depth_attachment_spec_.texture_format == FramebufferTextureFormat::DEPTH24STENCIL8)
         {
-            Utils::attach_depth_texture(depth_attachment_, specification_.samples, GL_DEPTH24_STENCIL8,
-                                        GL_DEPTH_STENCIL_ATTACHMENT, specification_.width, specification_.height);
+            Utils::attach_depth_texture(depth_attachment_, spec_.samples, GL_DEPTH24_STENCIL8,
+                                        GL_DEPTH_STENCIL_ATTACHMENT, spec_.width, spec_.height);
         }
     }
 
-    if (color_attachment_specification_.size() > 1)
+    if (color_attachment_spec_.size() > 1)
     {
         GLenum buffers[4] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3};
-        glDrawBuffers(color_attachment_specification_.size(), buffers);
+        glDrawBuffers(color_attachment_spec_.size(), buffers);
     }
-    else if (color_attachment_specification_.empty())
+    else if (color_attachment_spec_.empty())
     {
-        // Only depth-pass
         glDrawBuffer(GL_NONE);
     }
 
@@ -179,7 +178,7 @@ void OpenGLFramebuffer::invalidate()
 void OpenGLFramebuffer::bind()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, id_);
-    glViewport(0, 0, specification_.width, specification_.height);
+    glViewport(0, 0, spec_.width, spec_.height);
 }
 
 void OpenGLFramebuffer::unbind()
@@ -193,25 +192,24 @@ void OpenGLFramebuffer::resize(uint32_t width, uint32_t height)
     {
         return;
     }
-    specification_.width = width;
-    specification_.height = height;
+    spec_.width = width;
+    spec_.height = height;
 
     invalidate();
 }
 
-int OpenGLFramebuffer::read_pixel(uint32_t attachmentIndex, int x, int y)
+int OpenGLFramebuffer::pixel(uint32_t index, int x, int y)
 {
-    int pixelData;
-    glReadBuffer(GL_COLOR_ATTACHMENT0 + attachmentIndex);
-    glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
-    return pixelData;
+    int pixel_;
+    glReadBuffer(GL_COLOR_ATTACHMENT0 + index);
+    glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &pixel_);
+    return pixel_;
 }
 
-void OpenGLFramebuffer::clear_attachment(uint32_t attachmentIndex, int value)
+void OpenGLFramebuffer::clear_attachment(uint32_t index, int value)
 {
-    auto& spec = color_attachment_specification_[attachmentIndex];
-    glClearTexImage(color_attachment_[attachmentIndex], 0, Utils::texture_format_to_GL(spec.texture_format), GL_INT,
-                    &value);
+    auto& spec = color_attachment_spec_[index];
+    glClearTexImage(color_attachment_[index], 0, Utils::texture_format_to_GL(spec.texture_format), GL_INT, &value);
 }
 
-} // namespace Kontomire
+} // namespace knt

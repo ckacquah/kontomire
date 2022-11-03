@@ -2,7 +2,7 @@
 
 #include "kontomire/platform/opengl/buffer.h"
 
-namespace Kontomire
+namespace knt
 {
 
 /********************************/
@@ -70,4 +70,4 @@ void OpenGLIndexBuffer::unbind() const
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-} // namespace Kontomire
+} // namespace knt

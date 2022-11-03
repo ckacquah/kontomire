@@ -5,43 +5,37 @@
 #include <stdint.h>
 #include <vector>
 
-namespace Kontomire
+namespace knt
 {
 
 enum class FramebufferTextureFormat
 {
-    None = 0,
-
-    // Color
+    NONE = 0,
     RGBA8,
     RED_INTEGER,
-
-    // Depth/stencil
     DEPTH24STENCIL8,
-
-    // Defaults
-    Depth = DEPTH24STENCIL8
+    DEPTH = DEPTH24STENCIL8
 };
 
 struct FramebufferTextureSpecification
 {
+    FramebufferTextureFormat texture_format{FramebufferTextureFormat::NONE};
+
     FramebufferTextureSpecification() = default;
     FramebufferTextureSpecification(FramebufferTextureFormat format) : texture_format(format)
     {
     }
-
-    FramebufferTextureFormat texture_format = FramebufferTextureFormat::None;
 };
 
 struct FramebufferAttachmentSpecification
 {
+    std::vector<FramebufferTextureSpecification> attachments{};
+
     FramebufferAttachmentSpecification() = default;
     FramebufferAttachmentSpecification(std::initializer_list<FramebufferTextureSpecification> attachments)
         : attachments(attachments)
     {
     }
-
-    std::vector<FramebufferTextureSpecification> attachments;
 };
 
 struct FramebufferSpecification
@@ -63,15 +57,17 @@ class FrameBuffer
     virtual void unbind() = 0;
 
     virtual void resize(uint32_t width, uint32_t height) = 0;
-    virtual int read_pixel(uint32_t attachmentIndex, int x, int y) = 0;
+    virtual void clear_attachment(uint32_t index, int value) = 0;
 
-    virtual const FramebufferSpecification& get_specification() const = 0;
-    virtual void clear_attachment(uint32_t attachmentIndex, int value) = 0;
-    virtual uint32_t get_color_attachment_id(uint32_t index = 0) const = 0;
+    virtual int pixel(uint32_t index, int x, int y) = 0;
+
+    virtual const FramebufferSpecification& specification() const = 0;
+
+    virtual uint32_t color_attachment(uint32_t index = 0) const = 0;
 
     static std::shared_ptr<FrameBuffer> create(const FramebufferSpecification& spec);
 };
 
-} // namespace Kontomire
+} // namespace knt
 
 #endif // __KONTOMIRE_RENDERER_FRAMEBUFFER__

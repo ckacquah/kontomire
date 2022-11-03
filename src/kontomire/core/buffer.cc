@@ -4,7 +4,7 @@
 #include "kontomire/core/renderAPI.h"
 #include "kontomire/platform/opengl/buffer.h"
 
-namespace Kontomire
+namespace knt
 {
 
 std::shared_ptr<VertexBuffer> VertexBuffer::create(uint32_t size)
@@ -43,4 +43,4 @@ std::shared_ptr<IndexBuffer> IndexBuffer::create(const uint32_t* indices, uint32
     return nullptr;
 }
 
-} // namespace Kontomire
+} // namespace knt

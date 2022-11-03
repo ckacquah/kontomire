@@ -4,12 +4,11 @@
 #include <cstdint>
 #include <memory>
 
-
 #include <glm/glm.hpp>
 
 #include "vertex_arrays.h"
 
-namespace Kontomire
+namespace knt
 {
 
 class RenderAPI
@@ -43,6 +42,6 @@ class RenderAPI
     }
 };
 
-} // namespace Kontomire
+} // namespace knt
 
 #endif // __KONTOMIRE_RENDERER_API__

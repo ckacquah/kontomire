@@ -4,7 +4,7 @@
 #include <functional>
 #include <memory>
 
-namespace Kontomire
+namespace knt
 {
 
 RenderAPI::API RenderAPI::api_ = RenderAPI::API::OpenGL;
@@ -21,4 +21,4 @@ std::unique_ptr<RenderAPI> RenderAPI::create()
     return nullptr;
 }
 
-} // namespace Kontomire
+} // namespace knt

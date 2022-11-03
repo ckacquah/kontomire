@@ -7,7 +7,7 @@
 
 #include <glm/glm.hpp>
 
-namespace Kontomire
+namespace knt
 {
 
 class Shader
@@ -49,6 +49,6 @@ class ShaderLibrary
     bool exists(const std::string& name) const;
 };
 
-} // namespace Kontomire
+} // namespace knt
 
 #endif // __KONTOMIRE_CORE_SHADER__

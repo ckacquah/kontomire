@@ -44,8 +44,8 @@ class DemoLayer : public Layer
   private:
     float zoom{};
     double delta{};
-    float yaw{Kontomire::CameraDefaults::YAW};
-    float pitch{Kontomire::CameraDefaults::PITCH};
+    float yaw{knt::CameraDefaults::YAW};
+    float pitch{knt::CameraDefaults::PITCH};
 
     glm::vec4 quad_color{glm::vec4(1.0f, 0.5f, 0.0f, 1.0f)};
     glm::vec4 line_color{glm::vec4(0.2f, 1.0f, 0.0f, 1.0f)};
@@ -63,31 +63,30 @@ class DemoLayer : public Layer
 
     glm::mat4 transform{glm::mat4(1.0f)};
 
-    std::shared_ptr<Kontomire::Texture2D> texture;
-    std::shared_ptr<Kontomire::FrameBuffer> framebuffer{};
+    std::shared_ptr<knt::Texture2D> texture;
+    std::shared_ptr<knt::FrameBuffer> framebuffer{};
 
-    Kontomire::Camera camera{Kontomire::Camera()};
-    Kontomire::FramebufferSpecification framebuffer_specs;
+    knt::Camera camera{knt::Camera()};
+    knt::FramebufferSpecification framebuffer_specs;
 
   public:
     void init() override
     {
-        framebuffer_specs.attachments = {Kontomire::FramebufferTextureFormat::Depth,
-                                         Kontomire::FramebufferTextureFormat::RGBA8,
-                                         Kontomire::FramebufferTextureFormat::RED_INTEGER};
+        framebuffer_specs.attachments = {knt::FramebufferTextureFormat::DEPTH, knt::FramebufferTextureFormat::RGBA8,
+                                         knt::FramebufferTextureFormat::RED_INTEGER};
         framebuffer_specs.width = 1280;
         framebuffer_specs.height = 720;
 
-        texture = Kontomire::Texture2D::create("assets/textures/texture.jpg");
+        texture = knt::Texture2D::create("assets/textures/texture.jpg");
 
-        framebuffer = Kontomire::FrameBuffer::create(framebuffer_specs);
+        framebuffer = knt::FrameBuffer::create(framebuffer_specs);
 
         camera.set_aspect_ratio(static_cast<float>(framebuffer_specs.width) /
                                 static_cast<float>(framebuffer_specs.height));
 
-        Kontomire::Renderer::set_line_width(1.0f);
+        knt::Renderer::set_line_width(1.0f);
 
-        Kontomire::Renderer2D::init();
+        knt::Renderer2D::init();
 
         transform = glm::translate(glm::mat4(1.0f), square_position);
     };
@@ -96,13 +95,13 @@ class DemoLayer : public Layer
     {
         framebuffer->bind();
 
-        Kontomire::Renderer::set_clear_color(background_color);
-        Kontomire::Renderer::clear();
+        knt::Renderer::set_clear_color(background_color);
+        knt::Renderer::clear();
 
-        Kontomire::Renderer2D::begin(camera);
+        knt::Renderer2D::begin(camera);
 
-        Kontomire::Renderer2D::draw_line(glm::vec3(1.0f, 0.0f, 5.0f), glm::vec3(0.0f, 1.0f, 5.0f), line_color);
-        // Kontomire::Renderer2D::draw_quad(square_position, square_size, texture, quad_color);
+        knt::Renderer2D::draw_line(glm::vec3(1.0f, 0.0f, 5.0f), glm::vec3(0.0f, 1.0f, 5.0f), line_color);
+        // knt::Renderer2D::draw_quad(square_position, square_size, texture, quad_color);
 
         transform =
             glm::rotate(transform, glm::radians(static_cast<float>(30.0f * delta)), glm::vec3(1.0f, 0.0f, 0.0f)) *
@@ -113,10 +112,10 @@ class DemoLayer : public Layer
             transform = glm::translate(glm::mat4(1.0), square_position_prev - square_position) * transform;
         }
 
-        Kontomire::Renderer2D::draw_quad(transform, texture, quad_color);
-        Kontomire::Renderer2D::draw_circle(circle_position, circle_size, circle_color);
+        knt::Renderer2D::draw_quad(transform, texture, quad_color);
+        knt::Renderer2D::draw_circle(circle_position, circle_size, circle_color);
 
-        Kontomire::Renderer2D::end();
+        knt::Renderer2D::end();
 
         framebuffer->clear_attachment(1, -1);
         framebuffer->unbind();
@@ -129,11 +128,11 @@ class DemoLayer : public Layer
         square_size_prev = square_size;
         square_position_prev = square_position;
 
-        delta = (Kontomire::CameraDefaults::SPEED * ImGui::GetFrameCount()) / (ImGui::GetTime() * 3600);
+        delta = (knt::CameraDefaults::SPEED * ImGui::GetFrameCount()) / (ImGui::GetTime() * 3600);
 
-        uint32_t texture_id = framebuffer->get_color_attachment_id();
+        uint32_t texture_id = framebuffer->color_attachment();
 
-        ImGui::Begin("Kontomire");
+        ImGui::Begin("Playground Viewport");
         {
             ImGui::BeginChild("Viewport");
             ImGui::Image(reinterpret_cast<void*>(texture_id), ImGui::GetWindowSize(), ImVec2{0, 1}, ImVec2{1, 0});
@@ -174,25 +173,25 @@ class DemoLayer : public Layer
 
             if (ImGui::Button("LEFT"))
             {
-                camera.move(Kontomire::Camera::Direction::LEFT, delta);
+                camera.move(knt::Camera::Direction::LEFT, delta);
             }
 
             ImGui::SameLine();
             if (ImGui::Button("RIGHT"))
             {
-                camera.move(Kontomire::Camera::Direction::RIGHT, delta);
+                camera.move(knt::Camera::Direction::RIGHT, delta);
             }
 
             ImGui::SameLine();
             if (ImGui::Button("FORWARD"))
             {
-                camera.move(Kontomire::Camera::Direction::FORWARD, delta);
+                camera.move(knt::Camera::Direction::FORWARD, delta);
             }
 
             ImGui::SameLine();
             if (ImGui::Button("BACKWARD"))
             {
-                camera.move(Kontomire::Camera::Direction::BACKWARD, delta);
+                camera.move(knt::Camera::Direction::BACKWARD, delta);
             }
         }
         ImGui::End();

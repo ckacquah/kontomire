@@ -57,7 +57,9 @@ add_executable(
   ${PROJECT_SOURCE_DIR}/src/playground/main.cc
   ${PROJECT_SOURCE_DIR}/src/playground/window.cc
   ${PROJECT_SOURCE_DIR}/src/playground/application.cc
-  ${PROJECT_SOURCE_DIR}/src/playground/imgui_manager.cc
+  ${PROJECT_SOURCE_DIR}/src/playground/layer/layer.cc
+  ${PROJECT_SOURCE_DIR}/src/playground/graphics/context.cc
+  ${PROJECT_SOURCE_DIR}/src/playground/graphics/opengl/context.cc
 )
 
 target_include_directories(${KONTOMIRE_PLAYGROUND} PUBLIC ${PROJECT_SOURCE_DIR}/deps)

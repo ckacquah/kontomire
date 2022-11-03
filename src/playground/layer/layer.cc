@@ -13,16 +13,17 @@
 #include <imgui/backends/imgui_impl_glfw.h>
 #include <imgui/backends/imgui_impl_opengl3.h>
 
-#include "imgui_manager.h"
+#include "layer.h"
 
-ImguiWindowManager::ImguiWindowManager(const std::string& glsl_version_str) : glsl_version(glsl_version_str)
+ImGuiLayer::ImGuiLayer(const GLFWwindow* handle, const std::string& glsl_version)
+    : handle_(const_cast<GLFWwindow*>(handle)), version_(glsl_version)
 {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImPlot::CreateContext();
 }
 
-ImguiWindowManager::~ImguiWindowManager()
+ImGuiLayer::~ImGuiLayer()
 {
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
@@ -30,15 +31,8 @@ ImguiWindowManager::~ImguiWindowManager()
     ImGui::DestroyContext();
 }
 
-void ImguiWindowManager::set_size(int width, int height)
+void ImGuiLayer::init()
 {
-    _width = width;
-    _height = height;
-};
-
-void ImguiWindowManager::init(GLFWwindow* window)
-{
-    window_ptr = window;
     ImGuiIO& io = ImGui::GetIO();
     (void)io;
     io.IniFilename = "assets/config/desktop.ini";
@@ -52,31 +46,29 @@ void ImguiWindowManager::init(GLFWwindow* window)
     if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
     {
         style.WindowRounding = 0.0f;
-        // style.WindowPadding = ImVec2(0.0f, 0.0f);
         style.Colors[ImGuiCol_WindowBg].w = 1.0f;
     }
-    ImVec4 clear_color = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
-
-    // Setup Platform/Renderer backends
-    ImGui_ImplOpenGL3_Init(glsl_version.c_str());
-    ImGui_ImplGlfw_InitForOpenGL(window_ptr, true);
+    ImGui_ImplOpenGL3_Init(version_.c_str());
+    ImGui_ImplGlfw_InitForOpenGL(handle_, true);
 }
 
-void ImguiWindowManager::render(const std::function<void(void)>& callback) const
+void ImGuiLayer::new_frame()
 {
-    // Start the Dear ImGui frame
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
 
     ImGui::NewFrame();
     ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
-    callback();
+}
+
+void ImGuiLayer::render()
+{
     ImGui::Render();
 
-    glViewport(0, 0, _height, _width);
-    glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w,
-                 clear_color.w);
+    glViewport(0, 0, height_, width_);
+    glClearColor(clear_color_.r, clear_color_.g, clear_color_.b, clear_color_.a);
     glClear(GL_COLOR_BUFFER_BIT);
+
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
     ImGuiIO& io = ImGui::GetIO();
@@ -87,4 +79,10 @@ void ImguiWindowManager::render(const std::function<void(void)>& callback) const
         ImGui::RenderPlatformWindowsDefault();
         glfwMakeContextCurrent(backup_current_context);
     }
+}
+
+void ImGuiLayer::resize(uint32_t width, uint32_t height)
+{
+    width_ = width;
+    height_ = height;
 }

@@ -1,29 +1,34 @@
 #include "application.h"
 
-Application::Application() : window(std::make_unique<Window>("Kontomire Playground"))
+Application::Application() : window_(Window::create("Kontomire Playground", 1280, 768))
 {
-    layers.push_back(std::make_unique<TestLayer>());
-    layers.push_back(std::make_unique<DemoLayer>());
+    imgui_layer_ = std::make_unique<ImGuiLayer>(static_cast<GLFWwindow*>(window_->handle()));
+    imgui_layer_->init();
 
-    window->create();
+    layers_.push_back(std::make_unique<DemoLayer>());
+    layers_.push_back(std::make_unique<ImplotExampleLayer>());
 
-    for (const auto& layer : layers)
+    for (auto& layer : layers_)
     {
         layer->init();
     }
-
-    window->set_callback([&]() {
-        for (const auto& layer : layers)
-        {
-            layer->update();
-        }
-    });
 }
 
 void Application::run()
 {
-    while (!window->is_closed())
+    while (!window_->closed())
     {
-        window->update();
+        auto [width, height] = window_->size();
+
+        imgui_layer_->resize(width, height);
+        imgui_layer_->new_frame();
+
+        for (auto& layer : layers_)
+        {
+            layer->render();
+        }
+
+        imgui_layer_->render();
+        window_->update();
     }
 }

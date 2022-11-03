@@ -8,7 +8,7 @@ namespace Kontomire
 
 std::shared_ptr<VertexArray> VertexArray::create()
 {
-    switch (RenderAPI::get_API())
+    switch (RenderAPI::api())
     {
     case RenderAPI::API::None:
         return nullptr;

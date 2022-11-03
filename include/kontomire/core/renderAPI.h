@@ -1,8 +1,9 @@
 #ifndef __KONTOMIRE_RENDERER_API__
 #define __KONTOMIRE_RENDERER_API__
 
+#include <cstdint>
 #include <memory>
-#include <stdint.h>
+
 
 #include <glm/glm.hpp>
 
@@ -36,7 +37,7 @@ class RenderAPI
 
     static std::unique_ptr<RenderAPI> create();
 
-    static API get_API()
+    static API api()
     {
         return api_;
     }

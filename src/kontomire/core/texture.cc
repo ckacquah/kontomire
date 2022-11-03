@@ -12,7 +12,7 @@ namespace Kontomire
 
 std::shared_ptr<Texture2D> Texture2D::create(uint32_t width, uint32_t height)
 {
-    switch (RenderAPI::get_API())
+    switch (RenderAPI::api())
     {
     case RenderAPI::API::None:
         return nullptr;

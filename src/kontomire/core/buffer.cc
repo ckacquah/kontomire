@@ -9,7 +9,7 @@ namespace Kontomire
 
 std::shared_ptr<VertexBuffer> VertexBuffer::create(uint32_t size)
 {
-    switch (RenderAPI::get_API())
+    switch (RenderAPI::api())
     {
     case RenderAPI::API::None:
         return nullptr;
@@ -21,7 +21,7 @@ std::shared_ptr<VertexBuffer> VertexBuffer::create(uint32_t size)
 
 std::shared_ptr<VertexBuffer> VertexBuffer::create(const float* vertices, uint32_t size)
 {
-    switch (RenderAPI::get_API())
+    switch (RenderAPI::api())
     {
     case RenderAPI::API::None:
         return nullptr;
@@ -33,7 +33,7 @@ std::shared_ptr<VertexBuffer> VertexBuffer::create(const float* vertices, uint32
 
 std::shared_ptr<IndexBuffer> IndexBuffer::create(const uint32_t* indices, uint32_t size)
 {
-    switch (RenderAPI::get_API())
+    switch (RenderAPI::api())
     {
     case RenderAPI::API::None:
         return nullptr;

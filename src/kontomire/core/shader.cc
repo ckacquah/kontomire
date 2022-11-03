@@ -90,7 +90,7 @@ std::pair<std::string, std::string> pre_process_source(const std::string& source
 std::shared_ptr<Shader> Shader::create(const std::string& name, const std::string& vertex_src,
                                        const std::string& fragment_src)
 {
-    switch (RenderAPI::get_API())
+    switch (RenderAPI::api())
     {
     case RenderAPI::API::None:
         return nullptr;
@@ -102,7 +102,7 @@ std::shared_ptr<Shader> Shader::create(const std::string& name, const std::strin
 
 std::shared_ptr<Shader> Shader::create(const std::string& path)
 {
-    switch (RenderAPI::get_API())
+    switch (RenderAPI::api())
     {
     case RenderAPI::API::None:
         return nullptr;

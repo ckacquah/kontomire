@@ -9,7 +9,7 @@ namespace Kontomire
 
 std::shared_ptr<FrameBuffer> FrameBuffer::create(const FramebufferSpecification& spec)
 {
-    switch (RenderAPI::get_API())
+    switch (RenderAPI::api())
     {
     case RenderAPI::API::None:
         return nullptr;

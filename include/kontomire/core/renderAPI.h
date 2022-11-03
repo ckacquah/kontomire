@@ -8,7 +8,7 @@
 
 #include "vertex_arrays.h"
 
-namespace knt
+namespace Knt
 {
 
 class RenderAPI
@@ -42,6 +42,6 @@ class RenderAPI
     }
 };
 
-} // namespace knt
+} // namespace Knt
 
 #endif // __KONTOMIRE_RENDERER_API__

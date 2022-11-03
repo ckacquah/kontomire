@@ -5,7 +5,7 @@
 #include <stdint.h>
 #include <vector>
 
-namespace knt
+namespace Knt
 {
 
 enum class FramebufferTextureFormat
@@ -68,6 +68,6 @@ class FrameBuffer
     static std::shared_ptr<FrameBuffer> create(const FramebufferSpecification& spec);
 };
 
-} // namespace knt
+} // namespace Knt
 
 #endif // __KONTOMIRE_RENDERER_FRAMEBUFFER__

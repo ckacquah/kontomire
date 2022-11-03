@@ -7,7 +7,7 @@
 
 #include "kontomire/platform/opengl/shader.h"
 
-namespace knt
+namespace Knt
 {
 
 OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertex_src, const std::string& fragment_src)
@@ -160,4 +160,4 @@ void OpenGLShader::upload_uniform_mat4(const std::string& name, const glm::mat4&
     glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
-} // namespace knt
+} // namespace Knt

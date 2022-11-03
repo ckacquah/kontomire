@@ -6,7 +6,7 @@
 #include "kontomire/core/shader.h"
 #include "kontomire/platform/opengl/shader.h"
 
-namespace knt
+namespace Knt
 {
 
 namespace ShaderUtils
@@ -129,4 +129,4 @@ bool ShaderLibrary::exists(const std::string& name) const
     return shaders_.find(name) != shaders_.end();
 }
 
-} // namespace knt
+} // namespace Knt

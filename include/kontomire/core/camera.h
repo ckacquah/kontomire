@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-namespace knt
+namespace Knt
 {
 
 namespace CameraDefaults
@@ -112,6 +112,6 @@ class Camera
     }
 };
 
-} // namespace knt
+} // namespace Knt
 
 #endif // __KONTOMIRE_RENDERER_CAMERA__

@@ -2,7 +2,7 @@
 
 #include "kontomire/platform/opengl/renderAPI.h"
 
-namespace knt
+namespace Knt
 {
 
 void OpenGLRenderAPI::init()
@@ -47,4 +47,4 @@ void OpenGLRenderAPI::set_line_width(float width)
     glLineWidth(width);
 }
 
-} // namespace knt
+} // namespace Knt

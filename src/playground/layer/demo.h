@@ -44,8 +44,8 @@ class DemoLayer : public Layer
   private:
     float zoom{};
     double delta{};
-    float yaw{knt::CameraDefaults::YAW};
-    float pitch{knt::CameraDefaults::PITCH};
+    float yaw{Knt::CameraDefaults::YAW};
+    float pitch{Knt::CameraDefaults::PITCH};
 
     glm::vec4 quad_color{glm::vec4(1.0f, 0.5f, 0.0f, 1.0f)};
     glm::vec4 line_color{glm::vec4(0.2f, 1.0f, 0.0f, 1.0f)};
@@ -63,30 +63,30 @@ class DemoLayer : public Layer
 
     glm::mat4 transform{glm::mat4(1.0f)};
 
-    std::shared_ptr<knt::Texture2D> texture;
-    std::shared_ptr<knt::FrameBuffer> framebuffer{};
+    std::shared_ptr<Knt::Texture2D> texture;
+    std::shared_ptr<Knt::FrameBuffer> framebuffer{};
 
-    knt::Camera camera{knt::Camera()};
-    knt::FramebufferSpecification framebuffer_specs;
+    Knt::Camera camera{Knt::Camera()};
+    Knt::FramebufferSpecification framebuffer_specs;
 
   public:
     void init() override
     {
-        framebuffer_specs.attachments = {knt::FramebufferTextureFormat::DEPTH, knt::FramebufferTextureFormat::RGBA8,
-                                         knt::FramebufferTextureFormat::RED_INTEGER};
+        framebuffer_specs.attachments = {Knt::FramebufferTextureFormat::DEPTH, Knt::FramebufferTextureFormat::RGBA8,
+                                         Knt::FramebufferTextureFormat::RED_INTEGER};
         framebuffer_specs.width = 1280;
         framebuffer_specs.height = 720;
 
-        texture = knt::Texture2D::create("assets/textures/texture.jpg");
+        texture = Knt::Texture2D::create("assets/textures/texture.jpg");
 
-        framebuffer = knt::FrameBuffer::create(framebuffer_specs);
+        framebuffer = Knt::FrameBuffer::create(framebuffer_specs);
 
         camera.set_aspect_ratio(static_cast<float>(framebuffer_specs.width) /
                                 static_cast<float>(framebuffer_specs.height));
 
-        knt::Renderer::set_line_width(1.0f);
+        Knt::Renderer::set_line_width(1.0f);
 
-        knt::Renderer2D::init();
+        Knt::Renderer2D::init();
 
         transform = glm::translate(glm::mat4(1.0f), square_position);
     };
@@ -95,13 +95,13 @@ class DemoLayer : public Layer
     {
         framebuffer->bind();
 
-        knt::Renderer::set_clear_color(background_color);
-        knt::Renderer::clear();
+        Knt::Renderer::set_clear_color(background_color);
+        Knt::Renderer::clear();
 
-        knt::Renderer2D::begin(camera);
+        Knt::Renderer2D::begin(camera);
 
-        knt::Renderer2D::draw_line(glm::vec3(1.0f, 0.0f, 5.0f), glm::vec3(0.0f, 1.0f, 5.0f), line_color);
-        // knt::Renderer2D::draw_quad(square_position, square_size, texture, quad_color);
+        Knt::Renderer2D::draw_line(glm::vec3(1.0f, 0.0f, 5.0f), glm::vec3(0.0f, 1.0f, 5.0f), line_color);
+        // Knt::Renderer2D::draw_quad(square_position, square_size, texture, quad_color);
 
         transform =
             glm::rotate(transform, glm::radians(static_cast<float>(30.0f * delta)), glm::vec3(1.0f, 0.0f, 0.0f)) *
@@ -112,10 +112,10 @@ class DemoLayer : public Layer
             transform = glm::translate(glm::mat4(1.0), square_position_prev - square_position) * transform;
         }
 
-        knt::Renderer2D::draw_quad(transform, texture, quad_color);
-        knt::Renderer2D::draw_circle(circle_position, circle_size, circle_color);
+        Knt::Renderer2D::draw_quad(transform, texture, quad_color);
+        Knt::Renderer2D::draw_circle(circle_position, circle_size, circle_color);
 
-        knt::Renderer2D::end();
+        Knt::Renderer2D::end();
 
         framebuffer->clear_attachment(1, -1);
         framebuffer->unbind();
@@ -128,7 +128,7 @@ class DemoLayer : public Layer
         square_size_prev = square_size;
         square_position_prev = square_position;
 
-        delta = (knt::CameraDefaults::SPEED * ImGui::GetFrameCount()) / (ImGui::GetTime() * 3600);
+        delta = (Knt::CameraDefaults::SPEED * ImGui::GetFrameCount()) / (ImGui::GetTime() * 3600);
 
         uint32_t texture_id = framebuffer->color_attachment();
 
@@ -173,25 +173,25 @@ class DemoLayer : public Layer
 
             if (ImGui::Button("LEFT"))
             {
-                camera.move(knt::Camera::Direction::LEFT, delta);
+                camera.move(Knt::Camera::Direction::LEFT, delta);
             }
 
             ImGui::SameLine();
             if (ImGui::Button("RIGHT"))
             {
-                camera.move(knt::Camera::Direction::RIGHT, delta);
+                camera.move(Knt::Camera::Direction::RIGHT, delta);
             }
 
             ImGui::SameLine();
             if (ImGui::Button("FORWARD"))
             {
-                camera.move(knt::Camera::Direction::FORWARD, delta);
+                camera.move(Knt::Camera::Direction::FORWARD, delta);
             }
 
             ImGui::SameLine();
             if (ImGui::Button("BACKWARD"))
             {
-                camera.move(knt::Camera::Direction::BACKWARD, delta);
+                camera.move(Knt::Camera::Direction::BACKWARD, delta);
             }
         }
         ImGui::End();

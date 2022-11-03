@@ -7,7 +7,7 @@
 #include "kontomire/core/texture.h"
 #include "kontomire/platform/opengl/texture.h"
 
-namespace knt
+namespace Knt
 {
 
 std::shared_ptr<Texture2D> Texture2D::create(uint32_t width, uint32_t height)
@@ -45,4 +45,4 @@ std::shared_ptr<Texture2D> Texture2D::create(const std::string& path)
     return nullptr;
 }
 
-} // namespace knt
+} // namespace Knt

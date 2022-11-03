@@ -5,7 +5,7 @@
 #include <memory>
 #include <stdint.h>
 
-namespace knt
+namespace Knt
 {
 
 enum class ShaderDataType
@@ -166,6 +166,6 @@ class IndexBuffer
     static std::shared_ptr<IndexBuffer> create(const uint32_t* indices, uint32_t size);
 };
 
-} // namespace knt
+} // namespace Knt
 
 #endif // __KONTOMIRE_RENDERER_BUFFER__

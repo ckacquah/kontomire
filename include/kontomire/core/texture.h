@@ -4,7 +4,7 @@
 #include <memory>
 #include <string>
 
-namespace knt
+namespace Knt
 {
 
 class Texture
@@ -30,6 +30,6 @@ class Texture2D : public Texture
     static std::shared_ptr<Texture2D> create(uint32_t width, uint32_t height);
 };
 
-} // namespace knt
+} // namespace Knt
 
 #endif // __KONTOMIRE_CORE_TEXTURE__

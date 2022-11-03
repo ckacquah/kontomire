@@ -10,7 +10,7 @@
 #include "kontomire/core/shader.h"
 #include "kontomire/core/texture.h"
 
-namespace knt
+namespace Knt
 {
 
 struct QuadVertex
@@ -108,6 +108,6 @@ class Renderer2D
     static void draw_line(const glm::vec3& start, const glm::vec3& end, const glm::vec4& color);
 };
 
-} // namespace knt
+} // namespace Knt
 
 #endif // __KONTOMIRE_RENDERER_2D__

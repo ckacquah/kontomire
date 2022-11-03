@@ -3,7 +3,7 @@
 #include "kontomire/core/renderAPI.h"
 #include "kontomire/platform/opengl/vertex_arrays.h"
 
-namespace knt
+namespace Knt
 {
 
 std::shared_ptr<VertexArray> VertexArray::create()
@@ -18,4 +18,4 @@ std::shared_ptr<VertexArray> VertexArray::create()
     return nullptr;
 }
 
-} // namespace knt
+} // namespace Knt

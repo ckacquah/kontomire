@@ -5,7 +5,7 @@
 
 #include "kontomire/core/vertex_arrays.h"
 
-namespace knt
+namespace Knt
 {
 
 class OpenGLVertexArray : public VertexArray
@@ -31,6 +31,6 @@ class OpenGLVertexArray : public VertexArray
     virtual void unbind() const override;
 };
 
-} // namespace knt
+} // namespace Knt
 
 #endif // __KONTOMIRE_OPENGL_VERTEX_ARRAYS__

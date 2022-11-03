@@ -3,7 +3,7 @@
 
 #include "kontomire/core/framebuffer.h"
 
-namespace knt
+namespace Knt
 {
 
 class OpenGLFramebuffer : public FrameBuffer
@@ -44,6 +44,6 @@ class OpenGLFramebuffer : public FrameBuffer
     }
 };
 
-} // namespace knt
+} // namespace Knt
 
 #endif // __KONTOMIRE_OPENGL_FRAMEBUFFER__

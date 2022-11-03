@@ -2,7 +2,7 @@
 
 #include "kontomire/platform/opengl/framebuffer.h"
 
-namespace knt
+namespace Knt
 {
 
 static const uint32_t _MAX_FRAMEBUFFERSIZE = 8192;
@@ -212,4 +212,4 @@ void OpenGLFramebuffer::clear_attachment(uint32_t index, int value)
     glClearTexImage(color_attachment_[index], 0, Utils::texture_format_to_GL(spec.texture_format), GL_INT, &value);
 }
 
-} // namespace knt
+} // namespace Knt

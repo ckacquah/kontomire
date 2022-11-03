@@ -1,6 +1,6 @@
 #include "kontomire/platform/opengl/texture.h"
 
-namespace knt
+namespace Knt
 {
 
 OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height)
@@ -42,4 +42,4 @@ void OpenGLTexture2D::set_data(void* data, uint32_t size, uint8_t channels)
     glTextureSubImage2D(id_, 0, 0, 0, width_, height_, data_format_, GL_UNSIGNED_BYTE, data);
 }
 
-} // namespace knt
+} // namespace Knt

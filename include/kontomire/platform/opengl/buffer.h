@@ -5,7 +5,7 @@
 
 #include "kontomire/core/buffer.h"
 
-namespace knt
+namespace Knt
 {
 
 class OpenGLVertexBuffer : public VertexBuffer
@@ -55,6 +55,6 @@ class OpenGLIndexBuffer : public IndexBuffer
     }
 };
 
-} // namespace knt
+} // namespace Knt
 
 #endif // __KONTOMIRE_OPENGL_BUFFER__

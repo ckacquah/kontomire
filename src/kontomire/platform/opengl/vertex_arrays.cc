@@ -4,7 +4,7 @@
 
 #include <cassert>
 
-namespace knt
+namespace Knt
 {
 
 static GLenum convert_to_opengl_base_type(ShaderDataType type)
@@ -125,4 +125,4 @@ const std::shared_ptr<IndexBuffer>& OpenGLVertexArray::index_buffer() const
     return index_buffer_;
 }
 
-} // namespace knt
+} // namespace Knt

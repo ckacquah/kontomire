@@ -5,7 +5,7 @@
 
 #include "kontomire/core/texture.h"
 
-namespace knt
+namespace Knt
 {
 
 class OpenGLTexture2D : public Texture2D
@@ -47,6 +47,6 @@ class OpenGLTexture2D : public Texture2D
     virtual void bind(uint32_t slot = 0) const override;
 };
 
-} // namespace knt
+} // namespace Knt
 
 #endif // __KONTOMIRE_OPENGL_TEXTURE__

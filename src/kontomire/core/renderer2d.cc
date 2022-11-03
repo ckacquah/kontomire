@@ -12,7 +12,7 @@
 #include "kontomire/core/texture.h"
 #include "kontomire/core/vertex_arrays.h"
 
-namespace knt
+namespace Knt
 {
 
 constexpr uint32_t QUADS_VERTEX_COUNT = 4;
@@ -309,4 +309,4 @@ void Renderer2D::begin(const Camera& camera)
     render_data_.line_shader->set_mat4("u_ViewProjection", render_data_.view_projection);
 }
 
-} // namespace knt
+} // namespace Knt

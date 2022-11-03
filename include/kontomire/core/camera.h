@@ -32,6 +32,8 @@ class Camera
     glm::vec3 world_up_{};
     glm::vec3 position_{};
 
+    glm::mat4 view_projection_{};
+
   public:
     enum Direction
     {
@@ -51,6 +53,9 @@ class Camera
         front_ = glm::normalize(front);
         right_ = glm::normalize(glm::cross(front_, world_up_));
         up_ = glm::normalize(glm::cross(right_, front_));
+
+        view_projection_ = glm::perspective(glm::radians(zoom_), aspect_ratio_, 0.1f, 100.0f) *
+                           glm::lookAt(position_, position_ + front_, up_);
     }
 
   public:
@@ -63,10 +68,9 @@ class Camera
 
     virtual ~Camera() = default;
 
-    glm::mat4 view_projection() const
+    const glm::mat4& view_projection() const
     {
-        return glm::perspective(glm::radians(zoom_), aspect_ratio_, 0.1f, 100.0f) *
-               glm::lookAt(position_, position_ + front_, up_);
+        return view_projection_;
     }
 
     void set_aspect_ratio(float ratio)
@@ -76,7 +80,8 @@ class Camera
 
     void zoom(float level)
     {
-        zoom_ = level;
+        zoom_ = CameraDefaults::ZOOM - level;
+        update();
     }
 
     void rotate(float yaw, float pitch)
@@ -91,10 +96,10 @@ class Camera
         switch (direction)
         {
         case Direction::LEFT:
-            position_ += right_ * speed;
+            position_ -= right_ * speed;
             break;
         case Direction::RIGHT:
-            position_ -= right_ * speed;
+            position_ += right_ * speed;
             break;
         case Direction::FORWARD:
             position_ += front_ * speed;
@@ -103,6 +108,7 @@ class Camera
             position_ -= front_ * speed;
             break;
         }
+        update();
     }
 };
 
